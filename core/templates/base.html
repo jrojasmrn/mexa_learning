@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!--Template tag load static-->
+    {% load static %}
+    
+    <!--Icono de pestaña en navegador-->
+    <link  rel="icon" href="{% static 'core/img/icono.png' %}" type="image/png" />
+
+    <!--Enlace CSS Bootstrap-->
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+    <!--Enlace CSS estilos-->
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    
+    <title>Mexa-Learning | {% block title %} {% endblock %} </title>
+</head>
+<body data-spy="scroll" data-target="#navbar" data-offset="75">
+    <!--Inicio de header-navbar-->
+    <header id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img id="logo-nav" src="{% static 'core/img/logo.png' %}" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ml-auto">
+                        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'control-pane' %}">Mis cursos<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item {% if request.path == '/profile/' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'user-profile' %}">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item {% if request.path == '/content/' %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'courses' %}">Quiero aprender</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!--Fin de header-->
+
+    <!--Inicio de main-->
+    <main id="main">
+        {% block content %} {% endblock %}
+    </main>
+
+    </div>
+    <!--Fin de main-->
+
+    <!--Inicio de footer-->
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg col-md col-sm col-12">
+                    <h5>Contáctanos</h5>
+                    <p><img src="{% static 'core/img/telefono.png' %}" alt="telfono"> 01(55)58 84 71 61</p>
+                    <p><img src="{% static 'core/img/email.png' %}" alt="correo"> info@mexamerik.com</p>
+                </div>
+                <div class="col-lg col-md col-sm col-12">
+                    <h5>Redes sociales</h5>
+                    <a href="https://www.facebook.com/TMEXAMERIK/" target="_blank"><img src="{% static 'core/img/facebook.png' %}" alt="facebook"> FaceBook</a><br>
+                    <a href="https://twitter.com/GrupoMexamerik" target="_blank"><img src="{% static 'core/img/twitter.png' %}" alt="twitter"> Twitter</a><br>
+                    <a href="https://www.instagram.com/mexamerik/" target="_blank"><img src="{% static 'core/img/instagram.png' %}" alt="Instagram"> Instagram</a>
+                </div>
+                <div class="col-lg col-md col-sm col-12">
+                    <h5>Términos y condiciones</h5>
+                </div>
+                <div class="col-lg col-md col-sm col-12">
+                    <h5>Privacidad</h5>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--Fin de footer-->
+
+</body>
+<!--Scripts-->
+    <!--JQuery-->
+    <script src="{% static 'core/js/jquery-3.4.1.min.js' %}"></script>
+    <!--JS-->
+    <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+</html>

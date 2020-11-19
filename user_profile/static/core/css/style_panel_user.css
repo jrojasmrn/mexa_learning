@@ -1,0 +1,20 @@
+/*Header*/
+#logo-nav{
+    height: 40px;
+}
+
+/*Main*/
+#aside{
+    float: left;
+    background: #343a40;
+}
+#aside h3{
+    color: gold;
+}
+#cuerpo{
+    float: right;
+}
+#cuerpo iframe{
+    width: 100%;
+    height: 80vh;
+}

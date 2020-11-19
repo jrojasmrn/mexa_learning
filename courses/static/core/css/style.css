@@ -1,0 +1,102 @@
+/*Header*/
+#logo-nav{
+    height: 40px;
+}
+.text-rare{
+    color: #f0ae2c !important;
+}
+
+/*Main*/
+/*Scroll-Spy*/
+body{
+    position: relative;
+}
+/*Inicio*/
+#carousel{
+    position: relative; 
+}
+#main .carousel-item img{
+    max-height: 70vh;
+    object-fit: cover;
+    filter: grayscale(70%);
+}
+#carousel .overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+#carousel .overlay .container,
+#carousel .overlay .row{
+    height: 100%;
+}
+/*Acerca de*/
+#Acerca{
+    background-color: #343a40;
+    color: white;
+}
+#Acerca h2{
+    color: #f0ae2c;
+}
+#Acerca img{
+    max-width: 100%;
+}
+/*Inducciones*/
+#Inducciones .container h3{
+    text-align: center;
+    color: gray;
+    text-decoration: none;
+}
+#Inducciones .container h3:hover{
+    transition: .5s;
+    font-size: 25px;
+    color: darkred;
+}
+/*Nosotros*/
+#Nosotros .container-fluid{
+    position: relative;
+}
+#Nosotros .container-fluid img{
+    max-width: 100%;
+    object-fit: cover;
+    filter: grayscale(40%);
+}
+#Nosotros .overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    color: white;
+    text-align: center;
+}
+#Nosotros .container{
+    align-content: center;
+}
+/*Footer*/
+#footer{
+    background-color: #f92727;
+    padding: 15px;
+    text-align: center;
+}
+#footer h5{
+    color: white;
+}
+#footer a,
+#footer p{
+    text-decoration: none;
+    color: white;
+}
+#footer h5:hover{
+    transition: .5s;
+    color: gold;
+}
+
+/*Modals*/
+#error_sesion{
+    transition: 1s;
+    color: darkred;
+}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Panel de Control
+{% endblock %}
+
+{% block content %}
+    <section id="control-panel" class="mb-2">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-8">
+                    <div class="alert alert-info" role="alert">
+                        Mis cursos
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                          <h1 class="display-4">No hay cursos aquí</h1>
+                          <p class="lead">Por el momento no tienes cursos asignados, comunícate con el personal de DO para agregar un curso a tu perfil.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
