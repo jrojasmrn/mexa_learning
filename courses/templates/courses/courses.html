@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -31,7 +31,7 @@
                 <section id="resultado">
                     <div class="container">
                         <div class="row">
-                            {% for content in content %}
+                            {% for content in contents %}
                                 <div class="card mb-3" id="{{content.id}}">
                                     <a href="#" data-toggle="modal" data-target="#modal{{content.id}}"> <img src="{{content.image.url}}" class="card-img-top" alt="..."> </a>
                                     <div class="card-body">

@@ -19,14 +19,16 @@ from django.urls import path, include
 from django.conf import settings
 
 urlpatterns = [
-    #Admin URL
+    # Admin URL
     path('admin/', admin.site.urls),
-    #URLs from App Core
+    # URLs from App Core
     path('home/', include('core.urls')),
-    #URLs from App User_Profile
+    # URLs from App User_Profile
     path('profile/', include('user_profile.urls')),
-    #URLs from App Courses
+    # URLs from App Courses
     path('courses/', include('courses.urls')),
+    # URLs from App Social
+    path('social/', include('social.urls')),
 ]
 
 #Comprobar si el Debug está en marcha o desactivado

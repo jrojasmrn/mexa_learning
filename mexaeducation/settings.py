@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'core',
     'user_profile',
     'courses',
-    'status'
+    'status',
+    'social'
 ]
 
 MIDDLEWARE = [
