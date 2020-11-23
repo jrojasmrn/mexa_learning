@@ -20,7 +20,7 @@
                 <!--Barra de busqueda-->
                 <section id="buscar" class="mb-3">
                     <nav class="navbar navbar-light bg-light">
-                        <form class="form-inline">
+                        <form class="form-inline" id="search-title" method="GET">
                             <input class="form-control mr-sm-6" type="search" placeholder="¿Qué buscamos?" aria-label="Search" name="buscar">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                         </form>
@@ -32,10 +32,19 @@
                     <div class="container">
                         <div class="row">
                             {% for content in contents %}
-                                <div class="card mb-3" id="{{content.id}}">
-                                    <a href="#" data-toggle="modal" data-target="#modal{{content.id}}"> <img src="{{content.image.url}}" class="card-img-top" alt="..."> </a>
-                                    <div class="card-body">
-                                    <p class="card-text"> <h3>{{content.title}}</h3> {{content.description}}</p>
+                                <div class="col-6">
+                                    <div class="card mb-3" id="{{content.id}}">
+                                        <a href="#" data-toggle="modal" data-target="#modal{{content.id}}">
+                                            <img src="{{content.image.url}}" class="card-img-top" alt="Imagenes de cursos" id="image-courses">
+                                        </a>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <h3>{{content.title}}</h3>
+                                                {{content.description}}
+                                            </p>
+                                            <hr>
+                                            <p>{{content.updated}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             {% endfor %}

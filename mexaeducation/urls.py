@@ -22,13 +22,15 @@ urlpatterns = [
     # Admin URL
     path('admin/', admin.site.urls),
     # URLs from App Core
-    path('home/', include('core.urls')),
+    path('', include('core.urls')),
     # URLs from App User_Profile
     path('profile/', include('user_profile.urls')),
     # URLs from App Courses
     path('courses/', include('courses.urls')),
     # URLs from App Social
     path('social/', include('social.urls')),
+    #URLs from App Dashboard
+    path('dashboard/', include('dashboard.urls'))
 ]
 
 #Comprobar si el Debug está en marcha o desactivado
