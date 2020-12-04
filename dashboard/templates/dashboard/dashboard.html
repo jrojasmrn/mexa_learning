@@ -7,28 +7,45 @@
 
 {% block content %}
 {% for usercourse in usercourse %}
-    {% if usercourse.status.id == 1 %}
-        <section id="Bienvenida">
-            <div class="container mt-3">
-                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                    <strong><h1 class="display-4 mb-5">¡Bienvenido {{user.get_full_name}}!</h1></strong><p class="lead">Entraste al curso de <b>{{usercourse.course.title}}</b>, ahora sigue capacitarte. Comienza con los cursos indicados por el área de DO y preparate para la operación.</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+    <section id="Bienvenida">
+        <div class="container mt-3">
+            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                <strong><h1 class="display-4 mb-5">¡Bienvenido {{user.get_full_name}}!</h1></strong><p class="lead">Entraste al curso de <b>{{usercourse.course.title}}</b>, ahora sigue capacitarte. Comienza con los cursos indicados por el área de DO y preparate para la operación.</p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </section>
+    <div class="container-fluid mt-2">
+        <div class="row text-center">
+            <div class="col-lg-2 col-md-3 col-12 mb-2" id="aside">
+                <h3>Contenido</h3>
+                <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <!--Muestra TEMPORAL del contenido-->
+                    <a class="nav-link mb-4" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="true">Video</a>
+                    <a class="nav-link mb-4" id="v-pills-img-tab" data-toggle="pill" href="#v-pills-img" role="tab" aria-controls="v-pills-img" aria-selected="true">Información adicional</a>
                 </div>
             </div>
-        </section>
-    {% else %}
-        <section id="Bienvenida">
-            <div class="container mt-3">
-                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                    <strong><h1 class="display-4 mb-5">Hola de nuevo {{user.get_short_name}}!</h1></strong><p class="lead">Continua con tu curso y sigue creciendo dentro de la empresa, ¡Tu puedes!</p>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+            <div class="col-lg-10 col-md-9 col-12" id="cuerpo">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">
+                        {% if usercourse.course.video %}
+                            <iframe src="{{usercourse.course.video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        {% else %}
+                            <h4>Este curso no tiene video</h4>
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade show" id="v-pills-img" role="tabpanel" aria-labelledby="v-pills-img-tab">
+                        {% if usercourse.course.notes != 'No hay notas aún' %}
+                            <iframe src="{{usercourse.course.notes}}"></iframe>
+                        {% else %}
+                            <h4>Este curso no tiene información adicional</h4>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </section>
-    {% endif %}
+        </div>
+    </div>
 {% endfor %}
 {% endblock %}

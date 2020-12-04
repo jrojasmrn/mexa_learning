@@ -7,18 +7,67 @@
 
 {% block content %}
     <section id="control-panel" class="mb-2">
-        <div class="container mt-3">
+        <div class="container-fluid mt-2">
             <div class="row">
-                <div class="col-12 text-center">
-                    <div class="alert alert-success" role="alert">
-                        <h4 class="alert-heading">¡Estamos trabajando!</h4><hr>
-                        <p class="mb-0">En este momento nos encontramos trabajando en éste módulo. Espéralo junto con los demás elementos disponibles próximamente.</p>
-                    </div>
+                <div class="col-3">
+                    {% for profile in profile %}
+                        <div class="card-deck">
+                            <div class="card">
+                                {% if profile.user_image %}
+                                    <img src="{{profile.user_image.url}}" class="card-img-top" alt="user_image">
+                                {% else %}
+                                    <img src="/media/not_image_user.png" class="card-img-top" alt="user_image">
+                                {% endif %}
+                                
+                                <div class="card-body">
+                                <h5 class="card-title">{{user.get_full_name}}</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Nombre de usuario:<br>{{user.username}}</li>
+                                    {% if profile.location %}
+                                        <li class="list-group-item">Ubicación:<br>{{profile.location}}</li>
+                                    {% else %}
+                                        <li class="list-group-item">Ubicación:<br>No especificado</li>
+                                    {% endif %}
+                                    {% if profile.languaje %}
+                                        <li class="list-group-item">Idioma:<br>{{profile.languaje}}</li>
+                                    {% else %}
+                                        <li class="list-group-item">Idioma:<br>No especificado</li>
+                                    {% endif %}
+                                </ul>
+                                </div>
+                                <div class="card-footer">
+                                <small class="text-muted">Afiliado desde: {{user.date_joined}}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-info btn-lg btn-block mt-1">Editar perfil</button>
+                    {% endfor %}
                 </div>
-            </div>
-            <div class="row">
-                <div class="col text-center">
-                    <img src="{% static 'core/img/working.jpg' %}" class="img-fluid" alt="Responsive image">
+                <div class="col-9">
+                    {% for profile in profile %}
+                        <div class="card border-light mb-3">
+                            <div class="card-header">Acerca de mi</div>
+                            <div class="card-body">
+                            <h5 class="card-title">¡Algo sobre mi!</h5>
+                            {% if profile.description %}
+                                <p class="card-text">{{profile.description}}</p>
+                            {% else %}
+                                <p class="card-text">Ingresa una descripción sobre ti y lo que esperas sobre los cursos que estás por tomar. Tómate tu tiempo y escribe con confianza algo aquí.</p>
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="card border-danger mb-3">
+                            <div class="card-header">Mis certificados</div>
+                            <div class="card-body text">
+                            <h5 class="card-title">¡No tienes certificados!</h5>
+                            {% if profile.certificates %}
+                                <p class="card-text">{{profile.certificates_course}}</p>
+                            {% else %}
+                                <p class="card-text">Tranquilo, finaliza uno de los cursos que tengas asignados y aquí aparecerá tu certificado para validar que hayas finalizado con éxito tu curso.</p>
+                            {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

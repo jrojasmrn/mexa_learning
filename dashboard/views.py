@@ -12,4 +12,8 @@ def dashboard(request):
         Q(id = id_course),
         Q(status = 1) | Q(status = 3)
     )
+    for obj in usercourse:
+        new_status = Status.objects.get(status='En proceso')
+        obj.status = new_status
+        obj.save()
     return render(request, "dashboard/dashboard.html", {'usercourse':usercourse})
