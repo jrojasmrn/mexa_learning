@@ -8,65 +8,76 @@
 {% block content %}
     <section id="update-profile"> 
         <div class="container mt-2">
-            <div class="row">
-                {% for profile in profile %}
-                    <div class="col-6">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h3>Datos del perfil</h3>
-                                <hr>
-                                <h4>Nombre:<br>{{user.get_full_name}}</h4>
-                                <span>Usuario:<br>{{user.get_username}}</span>
-                            </div>
-                        </div>
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h3>Información adicional</h3>
-                                <hr>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Ubicación</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        {% for state in states %}
-                                            <option value="{{state.id}}" {% if state.id == profile.location.id %}selected{% endif %}>{{state.state_name}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect2">Lenguaje</label>
-                                    <select class="form-control" id="exampleFormControlSelect">
-                                        {% for languaje in languajes %}
-                                            <option value="{{languaje.id}}" {% if languaje.id == profile.languaje.id %}selected{% endif %}>{{languaje.languaje_name}}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Ingrese una descripción</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escribe tu descripción">{{profile.description}}</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <h3>Imágen actual del perfil</h3>
+            <form method="POST" name="update-form">
+                {% csrf_token %}
+                <div class="row">
+                    {% for profile in profile %}
+                        <div class="col-lg-6 col-12">
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h3>Datos del perfil</h3>
                                     <hr>
-                                    {% if profile.user_image %}
-                                        <img src="{{profile.user_image.url}}" alt="user_image" class="img-thumbnail">
-                                    {% else %}
-                                        <img src="/media/not_image_user.png" alt="user_image" class="img-thumbnail">
-                                    {% endif %}
+                                    <h4>Nombre:<br>{{user.get_full_name}}</h4>
+                                    <span>Usuario:<br>{{user.get_username}}</span>
+                                </div>
+                            </div>
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h3>Información adicional</h3>
+                                    <hr>
                                     <div class="form-group">
-                                        <label for="exampleFormControlFile1">Selecciona una imagen</label>
-                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                        <label for="exampleFormControlSelect1">Ubicación</label>
+                                        <select class="form-control" id="exampleFormControlSelect1">
+                                            {% for state in states %}
+                                                <option value="{{state.id}}" {% if state.id == profile.location.id %}selected{% endif %}>{{state.state_name}}</option>
+                                            {% endfor %}
+                                            
+                                        </select>
+                                        {{form.location}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect2">Lenguaje</label>
+                                        <select class="form-control" id="exampleFormControlSelect">
+                                            {% for languaje in languajes %}
+                                                <option value="{{languaje.id}}" {% if languaje.id == profile.languaje.id %}selected{% endif %}>{{languaje.languaje_name}}</option>
+                                            {% endfor %}
+                                            
+                                        </select>
+                                        {{form.languaje}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Ingrese una descripción</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escribe tu descripción">{{profile.description}}</textarea>
+                                        {{form.description}}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <h3>Imágen actual del perfil</h3>
+                                        <hr>
+                                        {% if profile.user_image %}
+                                            <img src="{{profile.user_image.url}}" alt="user_image" class="img-thumbnail">
+                                        {% else %}
+                                            <img src="/media/not_image_user.png" alt="user_image" class="img-thumbnail">
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Selecciona una imagen</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="col-lg-2 ml-auto mt-2 mb-3">
+                        <button type="submit" class="btn btn-success btn-lg">Guardar</button>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            </form>
         </div>
     </section>
 {% endblock %}
