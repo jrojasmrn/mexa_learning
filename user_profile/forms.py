@@ -6,6 +6,8 @@ from .models import UserProfile
 # Update user_profile form class
 class UpdateProfile(forms.ModelForm):
 
+    user_image = forms.ImageField()
+
     class Meta:
         # Le pasamos nuestro modelo a una variable interna
         model = UserProfile
@@ -19,8 +21,7 @@ class UpdateProfile(forms.ModelForm):
         ]
         # Obtenemos los campos del admin de Django para la integración al template
         widgets = {
-            'description': forms.Textarea(attrs={'class':'form-control'}),
-            # 'user_image': forms.FileField()
-            'location': forms.Select(attrs={'class':'form-control'}),
-            'languaje': forms.Select(attrs={'class':'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'location': forms.Select(attrs={'class': 'form-control'}),
+            'languaje': forms.Select(attrs={'class': 'form-control'}),
         }

@@ -8,7 +8,7 @@
 {% block content %}
     <section id="update-profile"> 
         <div class="container mt-2">
-            <form method="POST" name="update-form">
+            <form method="POST" name="update-form" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     {% for profile in profile %}
@@ -27,27 +27,14 @@
                                     <hr>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Ubicación</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            {% for state in states %}
-                                                <option value="{{state.id}}" {% if state.id == profile.location.id %}selected{% endif %}>{{state.state_name}}</option>
-                                            {% endfor %}
-                                            
-                                        </select>
                                         {{form.location}}
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Lenguaje</label>
-                                        <select class="form-control" id="exampleFormControlSelect">
-                                            {% for languaje in languajes %}
-                                                <option value="{{languaje.id}}" {% if languaje.id == profile.languaje.id %}selected{% endif %}>{{languaje.languaje_name}}</option>
-                                            {% endfor %}
-                                            
-                                        </select>
                                         {{form.languaje}}
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Ingrese una descripción</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escribe tu descripción">{{profile.description}}</textarea>
                                         {{form.description}}
                                     </div>
                                 </div>
@@ -66,7 +53,8 @@
                                         {% endif %}
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Selecciona una imagen</label>
-                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            <br>
+                                            {{form.user_image}}
                                         </div>
                                     </div>
                                 </div>

@@ -8,30 +8,23 @@ from .forms import UpdateProfile
 
 # Create your views here.
 
+# User profile view
 def user_profile(request):
+    # import pdb
+    # pdb.set_trace()
     profile = UserProfile.objects.all().filter(user=request.user)
     return render(request, "user_profile/profile.html", {'profile':profile})
 
 # Update user profile view
-def update_user_profile(request):
-    profile = UserProfile.objects.all().filter(user=request.user)
-    states = StatesList.objects.all()
-    languajes = LanguajeList.objects.all()
-
-    # Recuperamos el ID del perfil
-    instance = profile['id']
-    # Comprobamos que se está mandando un POST
-    if request.method == "POST":
-        # Añadimos los datos recibidos del formulario
-        form = UpdateProfile(request.POST, profile['id'])
-        # Confirmamos si el formulario es válido
+def update_user_profile(request, pk):
+    instancia = UserProfile.objects.get(id=pk)
+    form = UpdateProfile(instance=instancia)
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST, request.FILES, instance=instancia)
         if form.is_valid():
-            # Actualizamos la instancia
-            form = form.save(commit=False)
-            form.save()
-            # Cuando se ingrese la información redireccionamos al perfil
+            instancia.user_image = form.cleaned_data['user_image']
+            instancia = form.save(commit=False)
+            instancia.save()
             return redirect('user-profile')
-        # Si no es válido, no le pasamos información
-    else:
-        form = UpdateProfile()
-    return render(request, "user_profile/update_profile.html", {'form':form, 'profile':profile, 'states':states, 'languajes':languajes})
+    profile = UserProfile.objects.all().filter(user=request.user)
+    return render(request, "user_profile/update_profile.html", {'form':form, 'profile':profile})
