@@ -34,7 +34,7 @@
                             {% for content in contents %}
                                 <div class="col-lg-6 col-12">
                                     <div class="card mb-3" id="{{content.id}}">
-                                        <a href="#" data-toggle="modal" data-target="#modal{{content.id}}">
+                                        <a href="{% url 'preview-course' content.id %}">
                                             <img src="{{content.image.url}}" class="card-img-top" alt="Imagenes de cursos" id="image-courses">
                                         </a>
                                         <div class="card-body">

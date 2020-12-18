@@ -1,7 +1,7 @@
 from django.db import models
 #Import Status Models
 from status.models import Status
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Content(models.Model):
@@ -26,3 +26,20 @@ class Content(models.Model):
     #Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return self.title
+
+# Subscribe course model
+class SubscribeCourse(models.Model):
+    course = models.ForeignKey(Content, on_delete=models.CASCADE, verbose_name='Curso')
+    user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name='Usuario')
+    subscribe_time = models.DateTimeField(auto_now_add=True, verbose_name='Solicitado')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Status')
+
+    # Cambiar nomobre de modelo para mostrar
+    class Meta:
+        verbose_name = "Suscripción"
+        verbose_name_plural = "Suscripciones"
+        ordering = ['-subscribe_time']
+
+    # Definición de nombre para identificar el registro
+    def __str__(self):
+        return 'Solicitud de %s al curso %s' % (self.user, self.course)

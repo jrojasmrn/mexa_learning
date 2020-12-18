@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 # Import UserProfile model
 from .models import UserProfile
-# Import Catalogue models
-from catalogues.models import StatesList, LanguajeList
 # Import Forms
 from .forms import UpdateProfile
 
