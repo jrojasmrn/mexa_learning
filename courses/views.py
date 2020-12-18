@@ -24,3 +24,5 @@ def courses(request):
             Q(title__icontains = queryset_title)
         )
     return render(request, "courses/courses.html", {'contents':contents})
+
+# Esto es ua prueba para la rama
