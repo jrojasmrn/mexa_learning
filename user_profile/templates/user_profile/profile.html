@@ -9,7 +9,7 @@
     <section id="control-panel" class="mb-2">
         <div class="container-fluid mt-2">
             <div class="row">
-                <div class="col-3">
+                <div class="col-lg-3 col-md-3 col-12">
                     {% for profile in profile %}
                         <div class="card-deck">
                             <div class="card">
@@ -40,10 +40,10 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{% url 'update-user-profile' profile.id %}" class="btn btn-info btn-lg btn-block mt-1">Editar perfil</a>
+                        <a href="{% url 'update-user-profile' profile.id %}" class="btn btn-info btn-lg btn-block mt-1 mb-2">Editar perfil</a>
                     {% endfor %}
                 </div>
-                <div class="col-9">
+                <div class="col-lg-9 col-md-9 col-12">
                     {% for profile in profile %}
                         <div class="card border-light mb-3">
                             <div class="card-header">Acerca de mi</div>

@@ -149,3 +149,12 @@ STATIC_URL = '/static/'
 #Media config
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración para envio de correos electrónicos
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'jrojas@logsys.com.mx'
+EMAIL_HOST_PASSWORD = 'Mellevalaverga#l0'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

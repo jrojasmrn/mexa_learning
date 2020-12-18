@@ -9,26 +9,26 @@
     <section id="control-panel" class="mb-2">
         <div class="container mt-3">
             <div class="row">
-                <div class="col-8">
+                <div class="col-lg-8 col-md-8 col-12">
                     <div class="alert alert-info" role="alert">
                         {{user.get_full_name}} | Mis cursos
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-8">
+                <div class="col-lg-8 col-md-10 col-12">
                     {% if usercourse %}
                         {% for usercourse in usercourse %}
                             <div class="row">
-                                <div class="col-4">
+                                <div class="col-lg-4 col-md-4 col-12">
                                     <img src="{{usercourse.course.image.url}}" alt="..." class="img-thumbnail">
                                 </div>
-                                <div class="col-5">
+                                <div class="col-lg-5 col-md-5 col-12">
                                     <h1 id="{{usercourse.id}}">{{usercourse.course}}</h1>
                                     <p>{{usercourse.course.description}}</p>
                                     <span>Última modificación: {{usercourse.course.updated}}</span>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-lg-3 col-md-3 col-12">
                                     {% if usercourse.status.id == 1%}
                                         <a href="{% url 'dashboard' %}?usercourse={{usercourse.id}}" class="btn btn-outline-danger">Iniciar curso</a>
                                     {% elif usercourse.status.id == 3 %}
