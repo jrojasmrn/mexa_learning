@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-# Import UserProfile model
-from .models import UserProfile
+# Import models
+from .models import UserProfile, UserCourse
+from courses.models import SubscribeCourse
 # Import Forms
 from .forms import UpdateProfile
 
@@ -8,10 +9,10 @@ from .forms import UpdateProfile
 
 # User profile view
 def user_profile(request):
-    # import pdb
-    # pdb.set_trace()
     profile = UserProfile.objects.all().filter(user=request.user)
-    return render(request, "user_profile/profile.html", {'profile':profile})
+    content = UserCourse.objects.all().filter(user=request.user)
+    usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=5)
+    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs})
 
 # Update user profile view
 def update_user_profile(request, pk):

@@ -56,6 +56,8 @@
                             {% endif %}
                             </div>
                         </div>
+                        <br>
+                        <hr>
                         <div class="card border-danger mb-3">
                             <div class="card-header">Mis certificados</div>
                             <div class="card-body text">
@@ -65,6 +67,69 @@
                             {% else %}
                                 <p class="card-text">Tranquilo, finaliza uno de los cursos que tengas asignados y aquí aparecerá tu certificado para validar que hayas finalizado con éxito tu curso.</p>
                             {% endif %}
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="card border-info mb-3">
+                            <div class="card-header">Mis cursos</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Cursos inscritos</h5>
+                                <!--Tabla de cursos inscritos-->
+                                {% if content %}
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Id curso</th>
+                                            <th scope="col">Nombre de curso</th>
+                                            <th scope="col">Estatus</th>
+                                            <th scope="col">Calificación</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for content in content %}
+                                                <tr>
+                                                    <th scope="row">{{content.id}}</th>
+                                                    <td>{{content.course}}</td>
+                                                    <td>{{content.status}}</td>
+                                                    <td>NA</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-warning" role="alert">
+                                        No tienes cursos asignados
+                                    </div>
+                                {% endif %}
+                                <h5 class="card-title">Solicitudes de cursos</h5>
+                                {% if usersubs %}
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre de curso</th>
+                                            <th scope="col">Fecha de solicitud</th>
+                                            <th scope="col">Estatus</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for usersubs in usersubs %}
+                                                <tr>
+                                                    <th scope="row">{{usersubs.id}}</th>
+                                                    <td>{{usersubs.course}}</td>
+                                                    <td>{{usersubs.subscribe_time}}</td>
+                                                    <td>{{usersubs.status}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <div class="alert alert-warning" role="alert">
+                                        No tienes solicitudes de cursos
+                                    </div>
+                                {% endif %}
+                                <!--Fin de tabla para cursos-->
                             </div>
                         </div>
                     {% endfor %}

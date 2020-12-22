@@ -8,7 +8,7 @@
 {% block content %}
     <section id="preview">
         {% for preview in preview %}
-            <div class="container-fluid mb-3">
+            <div class="container-fluid mt-2 mb-3">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col">
                         <img src="{{preview.image.url}}" alt="Image_course" class="img-thumbnail">
@@ -29,10 +29,20 @@
                             <div class="container">
                             <h1 class="display-4">{{preview.title}}</h1>
                             <p class="lead">Al parecer este curso es por inscripción. ¡Manda una solicitud al área de Desarrollo organizacional dando clic en el siguiente botón!</p>
-                            <form method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-warning btn-lg btn-block">Inscribirme a este curso!</button>
-                            </form>
+                            {% if usercourse_data == 0 %}
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-lg btn-block">Inscribirme a este curso!</button>
+                                </form>
+                            {% elif usercourse_data == 1 %}
+                                <div class="alert alert-success" role="alert">
+                                    En este momento tu ya tienes acceso a este curso.
+                                </div>
+                            {% elif usercourse_data == 2 %}
+                                <div class="alert alert-warning" role="alert">
+                                    En este momento estamos procesando tu solicitud.
+                                </div>
+                            {% endif %}
                             </div>
                         </div>
                     </div>
