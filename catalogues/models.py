@@ -15,7 +15,6 @@ class StatesList(models.Model):
     def __str__(self):
         return '%s' % (self.state_name)
 
-
 # Languaje list catalogue
 class LanguajeList(models.Model):
     languaje_name = models.CharField(max_length=254, verbose_name='Lenguaje')
@@ -28,3 +27,16 @@ class LanguajeList(models.Model):
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return '%s' % (self.languaje_name)
+
+# Content type catalogue
+class ContentType(models.Model):
+    name = models.CharField(max_length=254, verbose_name='Tipo de contenido')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Tipo de contenido"
+        verbose_name_plural = "Tipo de contenidos"
+
+    # Cambio de nombre para mostrar información
+    def __str__(self):
+        return self.name
