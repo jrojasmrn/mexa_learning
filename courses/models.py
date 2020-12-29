@@ -43,3 +43,9 @@ class SubscribeCourse(models.Model):
     # Definición de nombre para identificar el registro
     def __str__(self):
         return 'Solicitud de %s al curso %s' % (self.user, self.course)
+
+# Cambios de rama 'cursos'
+
+# Content model
+class Content(models.Model):
+    pass
