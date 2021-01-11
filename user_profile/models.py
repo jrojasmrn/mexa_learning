@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from courses.models import Content
+from courses.models import ContentHeader, Content
 from status.models import Status
 from catalogues.models import StatesList, LanguajeList
 
@@ -8,7 +8,7 @@ from catalogues.models import StatesList, LanguajeList
 
 class UserCourse(models.Model):
     user = models.ForeignKey(User, verbose_name='Nombre de usuario', on_delete=models.CASCADE)
-    course = models.ForeignKey(Content, verbose_name='Nombre de curso', on_delete=models.CASCADE)
+    course = models.ForeignKey(ContentHeader, verbose_name='Nombre de curso', on_delete=models.CASCADE)
     status = models.ForeignKey(Status, verbose_name='Status', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
     updated = models.DateTimeField(auto_now=True, verbose_name='Modificado')

@@ -8,47 +8,33 @@
 {% block content %}
 {% for usercourse in usercourse %}
     <section id="Bienvenida">
-        <div class="container mt-3">
-            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                <strong><h1 class="display-4 mb-5">¡Bienvenido {{user.get_full_name}}!</h1></strong><p class="lead">Entraste al curso de <b>{{usercourse.course.title}}</b>, ahora sigue capacitarte. Comienza con los cursos indicados por el área de DO y preparate para la operación.</p>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="container-fluid mt-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">{{usercourse.course.title}} | {{usercourse.user.get_full_name}}</li>
+                </ol>
+            </nav>
         </div>
-    </section>
-    <div class="container-fluid mt-2">
-        <div class="row text-center">
-            <div class="col-lg-2 col-md-3 col-12 mb-2" id="aside">
-                <h3>Contenido</h3>
-                <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <!--Muestra TEMPORAL del contenido-->
-                    <a class="nav-link mb-4" id="v-pills-video-tab" data-toggle="pill" href="#v-pills-video" role="tab" aria-controls="v-pills-video" aria-selected="true">Video</a>
-                    <a class="nav-link mb-4" id="v-pills-img-tab" data-toggle="pill" href="#v-pills-img" role="tab" aria-controls="v-pills-img" aria-selected="true">Información adicional</a>
-                </div>
-            </div>
-            <div class="col-lg-10 col-md-9 col-12" id="cuerpo">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show" id="v-pills-video" role="tabpanel" aria-labelledby="v-pills-video-tab">
-                        {% if usercourse.course.video %}
-                            <iframe src="{{usercourse.course.video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        {% else %}
-                            <h4>Este curso no tiene video</h4>
-                        {% endif %}
-                    </div>
-                    <div class="tab-pane fade show" id="v-pills-img" role="tabpanel" aria-labelledby="v-pills-img-tab">
-                        {% if usercourse.course.notes != 'No hay notas aún' %}
-                            <iframe src="{{usercourse.course.notes}}"></iframe>
-                        {% else %}
-                            <h4>Este curso no tiene información adicional</h4>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <section>
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSjArX65HX_Bk5bPc7jc0ms1--8qPV-7b2LhglOYrAWRLwQrMcHOZPtkGjxC3nutC1HjeUSuf8h4R9t/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
     </section>
 {% endfor %}
+
+    <section id="contenido">
+        <div class="container-fluid mt-2 mb-3">
+            {% for modules in content %}
+            <div class="row">
+                
+                <div class="col-lg-3">
+                    <div class="alert alert-primary" role="alert">
+                        {{modules.module.module_name}}
+                    </div>
+                    <a href="{{modules.id}}" class="btn btn-outline-info">{{modules.name}}</a>
+                </div>
+                <iframe src="{{modules.video}}/preview" frameborder="0"></iframe>
+
+                
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
 {% endblock %}

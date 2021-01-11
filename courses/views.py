@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from datetime import datetime
 # Import Contents model
-from .models import Content, SubscribeCourse
+from .models import Content, SubscribeCourse, ContentHeader
 from user_profile.models import UserCourse
 
 # Create your views here.
@@ -11,12 +11,12 @@ from user_profile.models import UserCourse
 def courses(request):
     # Obtenemos todos los cursos con status 1 - activos
     queryset_title = request.GET.get("buscar")
-    contents = Content.objects.all().filter(
+    contents = ContentHeader.objects.all().filter(
         status = 1
     )
     # Una vez tenemos los cursos activos, hacemos un filtrado por nombre en los cursos
     if queryset_title:
-        contents = Content.objects.filter(
+        contents = ContentHeader.objects.filter(
             Q(title__icontains = queryset_title)
         )
     return render(request, "courses/courses.html", {'contents':contents})
@@ -30,6 +30,7 @@ def subs_course(content, user):
         user_id=user
     )
 
+# Validamos si el usuario ya tiene el curso asignado o en espera
 def validate_user_curses(pk):
     id_usercourse = UserCourse.objects.filter(course=pk)
     id_subs = SubscribeCourse.objects.filter(course=pk)
@@ -43,7 +44,7 @@ def validate_user_curses(pk):
 
 #Preview content view
 def preview_content(request, pk):
-    preview = Content.objects.filter(id=pk)
+    preview = ContentHeader.objects.filter(id=pk)
     # Determinar si el usuario ya hizo solicitud o ya lo tiene agregado
     usercourse_data = validate_user_curses(pk)
     # Si el usuario solicita acceso a un curso, insertamos el registro en la tabla de solicitud de inscripción
