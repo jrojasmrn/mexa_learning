@@ -9,14 +9,10 @@
     <section id="control-panel" class="mb-2">
         <div class="container mt-3">
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-12">
+                <div class="col-lg-8 col-md-10 col-12">
                     <div class="alert alert-info" role="alert">
                         {{user.get_full_name}} | Mis cursos
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-md-10 col-12">
                     {% if usercourse %}
                         {% for usercourse in usercourse %}
                             <div class="row">
@@ -26,11 +22,12 @@
                                 <div class="col-lg-5 col-md-5 col-12">
                                     <h1 id="{{usercourse.id}}">{{usercourse.course}}</h1>
                                     <p>{{usercourse.course.description}}</p>
+                                    <hr>
                                     <span>Última modificación: {{usercourse.course.updated}}</span>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-12">
                                     {% if usercourse.status.id == 1%}
-                                        <a href="{% url 'dashboard' usercourse.id usercourse.id.name %}" class="btn btn-outline-danger">Iniciar curso</a>
+                                        <a href="{% url 'dashboard' usercourse.id usercourse.course.title %}" class="btn btn-outline-danger">Iniciar curso</a>
                                     {% elif usercourse.status.id == 3 %}
                                         <a href="{% url 'dashboard' usercourse.id usercourse.course.title %}" class="btn btn-outline-warning">Continuar curso</a>
                                     {% elif usercourse.status.id == 4%}
@@ -47,10 +44,33 @@
                         <div class="jumbotron jumbotron-fluid">
                             <div class="container">
                             <h1 class="display-4">No hay cursos aquí</h1>
-                            <p class="lead">Por el momento no tienes cursos asignados, comunícate con el personal de DO para agregar un curso a tu perfil.</p>
+                            <p class="lead">Por el momento no tienes cursos asignados, comunícate con el personal de Desarrollo Organizacional para agregar un curso a tu perfil.</p>
                             </div>
                         </div>
                     {% endif %}
+                </div>
+                <div class="col-lg-4 col-md-2 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                          Anuncios
+                        </div>
+                        <div class="card-body">
+                        {% if adver %}
+                            {% for adver in adver %}
+                                <blockquote class="blockquote mb-0">
+                                    <p>{{adver.title}}</p>
+                                    <small>{{adver.content}}</small>
+                                    <footer class="blockquote-footer"><cite title="Source Title">{{adver.updated}}</cite></footer>
+                                </blockquote>
+                                <hr>
+                            {% endfor %}
+                        {% else %}
+                            <blockquote class="blockquote mb-0">
+                                <p>No hay anuncios para mostrar.</p>
+                            </blockquote>
+                        {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -33,6 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Registration app - Va primero por standard
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -150,11 +152,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Configuración para envio de correos electrónicos
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.googlemail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'jrojas@logsys.com.mx'
-EMAIL_HOST_PASSWORD = 'Mellevalaverga#l0'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+# Configuración para pantallas de login y logout
+LOGIN_REDIRECT_URL = 'control-pane'
+LOGOUT_REDIRECT_URL = 'login'

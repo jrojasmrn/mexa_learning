@@ -31,9 +31,9 @@ def subs_course(content, user):
     )
 
 # Validamos si el usuario ya tiene el curso asignado o en espera
-def validate_user_curses(pk):
-    id_usercourse = UserCourse.objects.filter(course=pk)
-    id_subs = SubscribeCourse.objects.filter(course=pk)
+def validate_user_curses(pk, user):
+    id_usercourse = UserCourse.objects.filter(course=pk, user=user)
+    id_subs = SubscribeCourse.objects.filter(course=pk, user=user)
     if id_usercourse:
         validator = 1
     elif id_subs:
@@ -46,7 +46,7 @@ def validate_user_curses(pk):
 def preview_content(request, pk):
     preview = ContentHeader.objects.filter(id=pk)
     # Determinar si el usuario ya hizo solicitud o ya lo tiene agregado
-    usercourse_data = validate_user_curses(pk)
+    usercourse_data = validate_user_curses(pk, request.user)
     # Si el usuario solicita acceso a un curso, insertamos el registro en la tabla de solicitud de inscripción
     if request.method == 'POST':
         # Obtenemos el ID del curso y el ID de usuario

@@ -16,10 +16,8 @@ def dashboard(request, pk, course_name):
         new_status = Status.objects.get(status='En proceso')
         obj.status = new_status
         obj.save()
+        # Obtengo el id del curso
         course_id = obj.course
-    # # Obtenemos los módulos totales del curso
-    # modules = ModulesCourses.objects.filter(content=course_id)
-    # # Obtenemos el contenido de cada modulo
-    # content = ContentCourseMedia.objects.filter(content=course_id)
+    # Obtenemos los módulos totales del curso filtrando por el id del curso obtenido
     content_module = ContentCourseMedia.objects.filter(content=course_id)
     return render(request, "dashboard/dashboard.html", {'usercourse':instancia, 'content':content_module})

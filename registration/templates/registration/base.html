@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!--Template tag load static-->
+    {% load static %}
+    
+    <!--Icono de pestaña en navegador-->
+    <link  rel="icon" href="{% static 'core/img/icono.png' %}" type="image/png" />
+
+    <!--Enlace CSS Bootstrap-->
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+    <!--Enlace CSS estilos-->
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style_panel_user.css' %}">
+    
+    <title>Mexa-Learning | {% block title %} {% endblock %} </title>
+</head>
+<body data-spy="scroll" data-target="#navbar" data-offset="75">
+    <!--Inicio de header-navbar-->
+    <header id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'login' %}">
+                    <img id="logo-nav" src="{% static 'core/img/logo.png' %}" alt="Logo">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <!--Fin de header-->
+
+    <!--Inicio de main-->
+    <main id="main">
+        {% block content %} {% endblock %}
+    </main>
+
+    </div>
+    <!--Fin de main-->
+
+</body>
+<!--Scripts-->
+    <!--JQuery-->
+    <script src="{% static 'core/js/jquery-3.4.1.min.js' %}"></script>
+    <!--JS-->
+    <script src="{% static 'core/js/bootstrap.min.js' %}"></script>
+</html>

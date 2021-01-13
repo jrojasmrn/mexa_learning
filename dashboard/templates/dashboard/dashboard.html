@@ -17,24 +17,47 @@
         </div>
     </section>
 {% endfor %}
-
     <section id="contenido">
         <div class="container-fluid mt-2 mb-3">
-            {% for modules in content %}
             <div class="row">
-                
-                <div class="col-lg-3">
-                    <div class="alert alert-primary" role="alert">
-                        {{modules.module.module_name}}
+                <div class="col-lg-2 col-md-3 col-12 mb-2">
+                    <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        {% for modules in content %}
+                            <div class="alert alert-info" role="alert">
+                                {{modules.module.module_name}}
+                            </div>
+                            <a class="nav-link mb-4" id="v-pills-{{modules.id}}-tab" data-toggle="pill" href="#v-pills-{{modules.id}}" role="tab" aria-controls="v-pills-{{modules.id}}" aria-selected="true">{{modules.name}}</a>
+                        {% endfor %}
                     </div>
-                    <a href="{{modules.id}}" class="btn btn-outline-info">{{modules.name}}</a>
                 </div>
-                <iframe src="{{modules.video}}/preview" frameborder="0"></iframe>
-
-                
+                <div class="col-lg-10 col-md-9 col-12" id="cuerpo">
+                    <div class="tab-content" id="v-pills-tabContent">
+                    {% for modules in content %}
+                        <div class="tab-pane fade show" id="v-pills-{{modules.id}}" role="tabpanel" aria-labelledby="v-pills-{{modules.id}}-tab">
+                            <!--Despliegue de multimedia-->
+                            <iframe src="{{modules.video}}/preview" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <!--Información del contenido-->
+                            <nav>
+                                <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-{{modules.id}}" role="tab" aria-controls="nav-description" aria-selected="true">Descripción</a>
+                                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-{{modules.id}}{{modules.id}}" role="tab" aria-controls="nav-notes" aria-selected="false">Notas</a>
+                                <a class="nav-item nav-link" id="nav-advertisements-tab" data-toggle="tab" href="#nav-{{modules.id}}{{modules.id}}{{modules.id}}" role="tab" aria-controls="nav-advertisements" aria-selected="false">Anuncios</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content mb-5" id="nav-tabContent">
+                                {% if modules.description %}
+                                    <div class="tab-pane fade show active" id="nav-{{modules.id}}" role="tabpanel" aria-labelledby="nav-home-tab">{{modules.description}}</div>
+                                {% else %}
+                                    <div class="tab-pane fade show active" id="nav-{{modules.id}}" role="tabpanel" aria-labelledby="nav-home-tab">No hay descripción</div>
+                                {% endif %}
+                                <div class="tab-pane fade" id="nav-{{modules.id}}{{modules.id}}" role="tabpanel" aria-labelledby="nav-profile-tab">{{modules.notes}}</div>
+                                <div class="tab-pane fade" id="nav-{{modules.id}}{{modules.id}}{{modules.id}}" role="tabpanel" aria-labelledby="nav-contact-tab">{{modules.notices}}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            {% endfor %}
         </div>
     </section>
-
 {% endblock %}
