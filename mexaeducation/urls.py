@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 
 urlpatterns = [
+    # URLs from App Registration
+    path('', include('django.contrib.auth.urls')),
     # Admin URL
     path('admin/', admin.site.urls),
     # URLs from App Core
@@ -31,8 +33,6 @@ urlpatterns = [
     path('social/', include('social.urls')),
     # URLs from App Dashboard
     path('dashboard/', include('dashboard.urls')),
-    # URLs from App Registration
-    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 #Comprobar si el Debug está en marcha o desactivado

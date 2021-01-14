@@ -1,6 +1,7 @@
 from django.urls import path
-#Import views
-from . import views
+from django.contrib.auth import views
+
+import django.contrib.auth.urls
 
 urlpatterns = [
     #Login URLs
