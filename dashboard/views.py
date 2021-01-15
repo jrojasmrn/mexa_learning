@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from user_profile.models import UserCourse
-from courses.models import ContentCourseMedia, ModulesCourses
 from status.models import Status
 from django.db.models import Q
 
@@ -18,6 +17,6 @@ def dashboard(request, pk, course_name):
         obj.save()
         # Obtengo el id del curso
         course_id = obj.course
-    # Obtenemos los módulos totales del curso filtrando por el id del curso obtenido
-    content_module = ContentCourseMedia.objects.filter(content=course_id)
-    return render(request, "dashboard/dashboard.html", {'usercourse':instancia, 'content':content_module})
+    # # Obtenemos los módulos totales del curso filtrando por el id del curso obtenido
+    # content_module = ContentCourseMedia.objects.filter(content=course_id)
+    return render(request, "dashboard/dashboard.html", {'usercourse':instancia})

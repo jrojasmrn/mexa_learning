@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.db.models import Q
 from datetime import datetime
 # Import Contents model
-from .models import Content, SubscribeCourse, ContentHeader
+from .models import SubscribeCourse, ContentHeader
 from user_profile.models import UserCourse
 
 # Create your views here.
