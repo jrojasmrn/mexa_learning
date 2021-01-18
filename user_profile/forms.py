@@ -5,9 +5,7 @@ from .models import UserProfile
 
 # Update user_profile form class
 class UpdateProfile(forms.ModelForm):
-
     user_image = forms.ImageField()
-
     class Meta:
         # Le pasamos nuestro modelo a una variable interna
         model = UserProfile

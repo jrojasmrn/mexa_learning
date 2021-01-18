@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from courses.models import ContentHeader
+from courses.models import ContentHeader, ContentMedia
 from status.models import Status
 from catalogues.models import StatesList, LanguajeList
 
@@ -40,3 +40,21 @@ class UserProfile(models.Model):
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return 'Perfil de %s' % (self.user.get_full_name())
+
+# Homework user files model
+class ActivityUsers(models.Model):
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Nombre de curso')
+    content_media = models.ForeignKey(ContentMedia, on_delete=models.CASCADE, verbose_name='Nombre de contenido')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    act_file = models.FileField(verbose_name='Archivo')
+    comment = models.TextField(verbose_name='Comentario')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Actividad usuario"
+        verbose_name_plural = "Actividades usuarios"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return 'Actividad de %s - %s' % (self.user.get_full_name(), self.content)

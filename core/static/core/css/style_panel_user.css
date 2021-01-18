@@ -4,10 +4,7 @@
 }
 
 /*Main*/
-#cuerpo{
-    float: right;
-}
-#cuerpo iframe{
-    width: 80%;
+#content-course iframe{
+    width: 100%;
     height: 70vh;
 }
