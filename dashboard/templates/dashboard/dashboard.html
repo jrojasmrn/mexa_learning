@@ -22,36 +22,52 @@
             <div class="row">
                 <div class="col-lg-2 col-md-3 col-12 mb-2">
                     <div class="nav flex-column nav-pills mb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        {% for modules in content %}
-                            <div class="alert alert-info" role="alert">
-                                {{modules.module.module_name}}
-                            </div>
-                            <a class="nav-link mb-4" id="v-pills-{{modules.id}}-tab" data-toggle="pill" href="#v-pills-{{modules.id}}" role="tab" aria-controls="v-pills-{{modules.id}}" aria-selected="true">{{modules.name}}</a>
+                        {% for content in content_course %}
+                            <a class="nav-link mb-4" id="v-pills-{{content.id}}-tab" data-toggle="pill" href="#v-pills-{{content.id}}" role="tab" aria-controls="v-pills-{{content.id}}" aria-selected="true">{{content.name}}</a>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-10 col-md-9 col-12" id="cuerpo">
                     <div class="tab-content" id="v-pills-tabContent">
-                    {% for modules in content %}
-                        <div class="tab-pane fade show" id="v-pills-{{modules.id}}" role="tabpanel" aria-labelledby="v-pills-{{modules.id}}-tab">
+                    {% for content in content_course %}
+                        <div class="tab-pane fade show" id="v-pills-{{content.id}}" role="tabpanel" aria-labelledby="v-pills-{{content.id}}-tab">
                             <!--Despliegue de multimedia-->
-                            <iframe src="{{modules.video}}/preview" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {% if content.g_suite %}
+                                <iframe src="{{content.g_suite}}?embedded=true"></iframe>
+                            {% elif content.video %}
+                                <iframe src="{{content.video}}/preview" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {% elif content.pdf %}
+                                <embed src="{{content.pdf}}" type="application/pdf" width="100%" height="600px">
+                            {% elif content.images %}
+                                <img src="{{content.images.url}}" class="img-fluid" alt="Responsive image">
+                            {% else %}
+                                <p>No hay contenido para mostrar</p>
+                            {% endif %}
                             <!--Información del contenido-->
                             <nav>
                                 <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-{{modules.id}}" role="tab" aria-controls="nav-description" aria-selected="true">Descripción</a>
-                                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-{{modules.id}}{{modules.id}}" role="tab" aria-controls="nav-notes" aria-selected="false">Notas</a>
-                                <a class="nav-item nav-link" id="nav-advertisements-tab" data-toggle="tab" href="#nav-{{modules.id}}{{modules.id}}{{modules.id}}" role="tab" aria-controls="nav-advertisements" aria-selected="false">Anuncios</a>
+                                <!--Description-->
+                                <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-{{content.id}}" role="tab" aria-controls="nav-description" aria-selected="true">Descripción</a>
+                                <!--Notes-->
+                                <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-{{content.id}}{{content.id}}" role="tab" aria-controls="nav-notes" aria-selected="false">Notas</a>
+                                <!--Activity-->
+                                <a class="nav-item nav-link" id="nav-advertisements-tab" data-toggle="tab" href="#nav-{{content.id}}{{content.id}}{{content.id}}" role="tab" aria-controls="nav-advertisements" aria-selected="false">Actividades {% if content.activity_name %}<span class="badge badge-warning">1</span>{% endif %}</a>
                                 </div>
                             </nav>
                             <div class="tab-content mb-5" id="nav-tabContent">
-                                {% if modules.description %}
-                                    <div class="tab-pane fade show active" id="nav-{{modules.id}}" role="tabpanel" aria-labelledby="nav-home-tab">{{modules.description}}</div>
+                                <!--Description-->
+                                <div class="tab-pane fade show active" id="nav-{{content.id}}" role="tabpanel" aria-labelledby="nav-home-tab">{{content.description}}</div>
+                                <!--Notes-->
+                                <div class="tab-pane fade" id="nav-{{content.id}}{{content.id}}" role="tabpanel" aria-labelledby="nav-profile-tab">{{content.notes}}</div>
+                                <!--Activity-->
+                                {% if content.activity_name %}
+                                    <div class="tab-pane fade" id="nav-{{content.id}}{{content.id}}{{content.id}}" role="tabpanel" aria-labelledby="nav-contact-tab"><b><h4>{{content.activity_name}}</h4></b>
+                                    <br>
+                                    <p>{{content.activity_description}}</p>
+                                    </div>
                                 {% else %}
-                                    <div class="tab-pane fade show active" id="nav-{{modules.id}}" role="tabpanel" aria-labelledby="nav-home-tab">No hay descripción</div>
+                                    <div class="tab-pane fade show active" id="nav-{{content.id}}{{content.id}}{{content.id}}" role="tabpanel" aria-labelledby="nav-home-tab">No hay actividad para este módulo</div>
                                 {% endif %}
-                                <div class="tab-pane fade" id="nav-{{modules.id}}{{modules.id}}" role="tabpanel" aria-labelledby="nav-profile-tab">{{modules.notes}}</div>
-                                <div class="tab-pane fade" id="nav-{{modules.id}}{{modules.id}}{{modules.id}}" role="tabpanel" aria-labelledby="nav-contact-tab">{{modules.notices}}</div>
                             </div>
                         </div>
                         {% endfor %}

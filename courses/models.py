@@ -24,31 +24,50 @@ class ContentHeader(models.Model):
     def __str__(self):
         return self.title
 
-# # Content courses model
-# class ContentCourseMedia(models.Model):
-#     content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Nombre de curso')
-#     name = models.CharField(max_length=254, verbose_name='Nombre de contenido')
-#     description = models.TextField(verbose_name='Descripción', null=True, blank=True)
-#     notes = models.TextField(verbose_name='Notas', default='No hay notas aún')
-#     notices = models.TextField(verbose_name='Anuncios', default='No hay anuncios aquí')
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, verbose_name='Tipo de contenido')
-#     g_suite = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
-#     video = models.URLField(verbose_name='Video', null=True, blank=True)
-#     pdf = models.FileField(verbose_name='Seleccione documento PDF', null=True, blank=True)
-#     images = models.ImageField(verbose_name='Seleccione imágen', null=True, blank=True)
-#     status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Status', default=1)
-#     created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
-#     updated = models.DateTimeField(auto_now=True, verbose_name='Modificado')
-#
-#     # Cambiar nombre de modelo para mostrar
-#     class Meta:
-#         verbose_name = "Contenido de curso"
-#         verbose_name_plural = "Contenido de cursos"
-#         ordering = ['content']
-#
-#     # Cambio de nombre de proyectos para mostrar
-#     def __str__(self):
-#         return "Contenido %s de módulo %s - %s" % (self.name, self.module, self.content)
+# Content courses model
+class ContentMedia(models.Model):
+    name = models.CharField(max_length=254, verbose_name='Nombre de contenido')
+    description = models.TextField(verbose_name='Descripción', null=True, blank=True, default='No hay descripción')
+    notes = models.TextField(verbose_name='Notas', null=True, blank=True, default='No hay notas')
+    g_suite = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
+    video = models.URLField(verbose_name='Video', null=True, blank=True)
+    pdf = models.FileField(verbose_name='Seleccione documento PDF', null=True, blank=True)
+    images = models.ImageField(verbose_name='Seleccione imágen', null=True, blank=True)
+    activity_name = models.CharField(max_length=254, verbose_name='Nombre de actividad', null=True, blank=True)
+    activity_description = models.TextField(verbose_name='Descripcion de actividad', null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Modificado')
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Nombre de curso')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Status', default=1)
+
+    # Cambiar nombre de modelo para mostrar
+    class Meta:
+        verbose_name = "Contenido de curso"
+        verbose_name_plural = "Contenido de cursos"
+        ordering = ['content']
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return "Contenido %s de curso %s" % (self.name, self.content)
+
+# Test courses model
+class TestCourse(models.Model):
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Nombre de curso')
+    question = models.CharField(max_length=254, verbose_name='Pregunta')
+    answer_v = models.CharField(max_length=254, verbose_name='Respuesta correcta')
+    answer_f1 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
+    answer_f2 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
+    answer_f3 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
+
+    # Cambiar nombre de modelo para mostrar
+    class Meta:
+        verbose_name = "Examen"
+        verbose_name_plural = "Examenes"
+        ordering = ['content']
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return "Pregunta %s" % (self.question)
 
 # Subscribe course model
 class SubscribeCourse(models.Model):
