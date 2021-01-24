@@ -4,16 +4,10 @@
 }
 
 /*Main*/
-/*Scroll-Spy*/
-body{
-    position: relative;
+#contenido #baseimage{
+    height: 300px;
 }
 
-/*Courses Card's style*/
-#image-courses{
-    height: 100%;
-    width: 100%;
-}
 
 /*Footer*/
 #footer{
@@ -32,10 +26,4 @@ body{
 #footer h5:hover{
     transition: .5s;
     color: gold;
-}
-
-/*Modals*/
-#error_sesion{
-    transition: 1s;
-    color: darkred;
 }

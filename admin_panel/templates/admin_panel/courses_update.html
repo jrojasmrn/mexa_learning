@@ -1,0 +1,58 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Modificar curso
+{% endblock %}
+
+{% block content %}
+<section id="create-course">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid mt-2">
+                    <div class="container">
+                      <h1 class="display-4">Modificar curso</h1>
+                      <p class="lead">Aquí puedes crear un curso nuevo para que los usuarios puedan tomarlo y aprender nuevas habilidades para la empresa. Recuerda que éste debe de ser corto y digerible para que el usuario pueda tomarlo sin problemas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <label>Nombre de curso</label>
+                        {{form.title}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        {{form.description}}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5">
+                    <label>Inserta una imagen para el curso</label>
+                    <br>
+                    {{form.image}}
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Estatus de curso</label>
+                        {{form.status}}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="mb-3 mt-3 btn btn-success btn-lg btn-block">Mofificar curso</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

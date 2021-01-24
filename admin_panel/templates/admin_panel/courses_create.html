@@ -1,0 +1,49 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Crear curso
+{% endblock %}
+
+{% block content %}
+<section id="create-course">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid mt-2">
+                    <div class="container">
+                      <h1 class="display-4">Crear curso nuevo</h1>
+                      <p class="lead">Aquí puedes crear un curso nuevo para que los usuarios puedan tomarlo y aprender nuevas habilidades para la empresa. Recuerda que éste debe de ser corto y digerible para que el usuario pueda tomarlo sin problemas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="form-group">
+                        <label>Nombre de curso</label>
+                        <input type="text" class="form-control" placeholder="Inserta nombre de curso" name="title">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea class="form-control" rows="3" placeholder="Inserta una descripción del curso" name="description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5">
+                    <label>Inserta una imagen para el curso</label>
+                    {{form.image}}
+                </div>
+            </div>
+            <button type="submit" class="mb-3 mt-3 btn btn-success btn-lg btn-block">Crear curso</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

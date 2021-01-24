@@ -1,0 +1,72 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Crear usuarios
+{% endblock %}
+
+{% block content %}
+<section id="create_user">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid mt-2">
+                    <div class="container">
+                      <h1 class="display-4">Crear usuario</h1>
+                      <p class="lead">Aquí puedes crear un usuario para que tome cursos, consiga certificados y pueda interactuar con el sitio. Solo llena el siguiente formulario y crea un usuario nuevo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Nombre(s)</label>
+                          <input type="text" class="form-control" name="first_name">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Apellidos</label>
+                          <input type="text" class="form-control" name="last_name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label>Nombre de usuario</label>
+                          <input type="text" class="form-control" name="username">
+                          {% if form.username.errors %}
+                            {{form.username.errors}}
+                          {% endif %}
+                          {{form.username.help_text}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Correo electrónico</label>
+                          <input type="email" class="form-control" name="email">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Contraseña</label>
+                          <input type="password" class="form-control" name="password1">
+                          {{form.password1.help_text}}
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label>Confirmar contraseña</label>
+                          <input type="password" class="form-control" name="password2">
+                          {{form.password2.help_text}}
+                        </div>
+                        {% if form.password2.errors %}
+                            {{form.password2.errors}}
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block mb-3">Agregar usuario</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

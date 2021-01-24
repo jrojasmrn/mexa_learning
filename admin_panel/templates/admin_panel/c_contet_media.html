@@ -1,0 +1,74 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Contenido de curso
+{% endblock %}
+
+{% block content %}
+<section id="c_content_media">
+    {% for preview in preview %}
+        <div class="container-fluid mt-2 mb-3">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col">
+                    <img src="{{preview.image.url}}" alt="Image_course" class="img-thumbnail">
+                    <hr>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><b>Título:</b> <br> {{preview.title}}</li>
+                            <li class="list-group-item"><b>Descripción:</b> <br> {{preview.description}}</li>
+                        </ul>
+                        <div class="card-footer">
+                            <b>Actualización:</b> <br>
+                            {{preview.updated}}
+                        </div>
+                    </div>
+                    <a href="{% url 'update_course' preview.id %}" class="btn btn-warning btn-lg btn-block">Editar</a>
+                </div>
+                <div class="col-lg-9 col-md-9 col">
+                    <nav aria-label="breadcrumb" class="mt-2">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">Contenido de curso</li>
+                            <a class="ml-auto btn btn-outline-success" href="{% url 'create_media' preview.id %}">Crear nuevo</a>
+                        </ol>
+                    </nav>
+                    <hr>
+                    {% if media %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Creado</th>
+                                <th scope="col">Activo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for media in media %}
+                                <tr>
+                                    <th scope="row"><a href="{% url 'update_media' media.id %}">{{media.name}}</a></th>
+                                    <td>{{media.created}}</td>
+                                    <td>
+                                        {% if media.status.id == 1%}
+                                            <img src="{% static 'core/img/check.png' %}" alt="Si">
+                                        {% else %}
+                                            <img src="{% static 'core/img/no_check.png' %}" alt="No">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                          <h1 class="display-4">No hay contenido</h1>
+                          <p class="lead">Al parecer este curso no tiene contenido. Crea un contenido para este curso y haz que usuarios lo tomen.</p>
+                        </div>
+                      </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

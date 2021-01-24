@@ -1,0 +1,94 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Matriz usuarios
+{% endblock %}
+
+{% block content %}
+<section id="users">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline" id="search-title" method="GET">
+                        <input class="form-control mr-sm-6" type="search" placeholder="Inserta el nombre" aria-label="Search" name="buscar">
+                        <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="submit">Buscar</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="mt-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Matríz de usuarios</li>
+                        <a class="ml-auto btn btn-outline-success" href="{% url 'create_user' %}">Crear nuevo</a>
+                    </ol>
+                </nav>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for users in users %}
+                        <tr>
+                            <th scope="row">{{users.id}}</th>
+                            <td><a href="{% url 'update_user' users.id %}">{{users.first_name}}</a></td>
+                            <td>{{users.last_name}}</td>
+                            <td>{{users.email}}</td>
+                            <td>
+                                {% if users.is_active == True %}
+                                    <img src="{% static 'core/img/check.png' %}" alt="Si">
+                                {% else %}
+                                    <img src="{% static 'core/img/no_check.png' %}" alt="No">
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+                <hr>
+                <div class="alert alert-warning" role="alert">
+                    Usuarios administrativos
+                </div>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for admin_users in admin_users %}
+                        <tr>
+                            <th scope="row">{{admin_users.id}}</th>
+                            <td>{{admin_users.first_name}}</td>
+                            <td>{{admin_users.last_name}}</td>
+                            <td>{{admin_users.email}}</td>
+                            <td>
+                                {% if admin_users.is_active == True %}
+                                    <img src="{% static 'core/img/check.png' %}" alt="Si">
+                                {% else %}
+                                    <img src="{% static 'core/img/no_check.png' %}" alt="No">
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Panel de administrador
+{% endblock %}
+
+{% block content %}
+<section id="Bienvenida">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                      <h1 class="display-4">Panel de administrador</h1>
+                      <p class="lead">En este momento estás en el panel de administrador. Aquí puedes crear o modificar cursos, examenes, usuarios, etc. Recuerda que <b>no debes compartir credenciales de acceso con nadie por seguridad del sitio y de la empresa.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

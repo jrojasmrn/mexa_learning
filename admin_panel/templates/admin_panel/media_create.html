@@ -1,0 +1,101 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Crear contenido
+{% endblock %}
+
+{% block content %}
+<section id="create_media">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid mt-2">
+                    <div class="container">
+                      <h1 class="display-4">Crear contenido</h1>
+                      <p class="lead">Aquí puedes crear contenido multimedia para un curso previamente creado. Puedes <b>incluir videos, documentos de google, PDFs e imágenes.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-danger" role="alert">
+                    Verifica la información antes de crear el contenido multimedia
+                </div>
+            </div>
+        </div>
+        {{form.errors}}
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label hidden>Nombre de curso</label>
+                    <input hidden type="text" class="form-control" name="content" value="{{content.id}}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nombre de contenido</label>
+                    <input required type="text" class="form-control" placeholder="Ingresa el nombre" name="name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Descripción</label>
+                    <textarea class="form-control" rows="3" placeholder="Ingresa una descripción" name="description"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Notas</label>
+                    <input type="text" class="form-control" placeholder="Ingresa una nota para el contenido" name="notes">
+                </div>
+            </div>
+            <div class="alert alert-primary" role="alert">
+                Contenido del curso
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Archivos G-Suite</label>
+                    <input type="url" class="form-control" placeholder="Ingresa el link del documento" name="g_suite">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Video</label>
+                    <input type="url" class="form-control" placeholder="Ingresa el link del video" name="video">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Archivo PDF</label>
+                    {{form.pdf}}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Imágen</label>
+                    {{form.images}}
+                </div>
+            </div>
+            <div class="alert alert-success" role="alert">
+                Actividad para el contenido
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Título de actividad</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el título de la actividad" name="activity_name">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label>Descripción</label>
+                    <textarea class="form-control" rows="3" placeholder="Ingresa una descripción" name="activity_description"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="mb-3 btn btn-success btn-lg btn-block">Crear contenido</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

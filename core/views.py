@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from user_profile.models import UserCourse
+from user_profile.models import UserCourse, UserProfile
 from .models import Advertisements, AssistanceUser
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -30,10 +30,32 @@ def assistance_user(user):
             assistance=last_login,
             user=user
         )
+
+# create user profile function
+def create_user_profile(user):
+    # Validamos que el perfil no existe
+    validate_data = UserProfile.objects.values().filter(
+        Q(user=user)
+    )
+    if len(validate_data) == 0:
+        # Creamos el registro en la tabla
+        user_profile_id = UserProfile.objects.create(
+            user=user
+        )
+    # Si el registro existe lo actualizamos con la misma información
+    else:
+        user_profile_id = UserProfile.objects.filter(
+            Q(user=user)
+        ).update(
+            user=user
+        )
+
 # home principal view
 def home(request):
     # Creamos registro de asistencia de la plataforma
     assistance_user(request.user)
+    # Creamos el perfil del usuario si no existe
+    create_user_profile(request.user)
     # Obtenemos los cursos del usuario
     usercourse = UserCourse.objects.all().filter(
         Q(user = request.user),

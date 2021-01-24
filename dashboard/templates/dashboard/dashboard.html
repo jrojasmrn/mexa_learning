@@ -12,7 +12,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">{{usercourse.course.title}} | {{usercourse.user.get_full_name}}</li>
-                  <a class="ml-auto btn btn-outline-warning" href="">Examen</a>
+                  <a class="ml-auto btn btn-outline-warning" href="{% url 'test_course' usercourse.course.id %}">Examen</a>
                 </ol>
             </nav>
         </div>
@@ -57,9 +57,21 @@
                         </nav>
                         <div class="tab-content mb-5" id="nav-tabContent">
                             <!--Description-->
-                            <div class="tab-pane fade show active" id="nav-{{content_course_data.id}}-1" role="tabpanel" aria-labelledby="nav-home-tab">{{content_course_data.description}}</div>
+                            <div class="tab-pane fade show active" id="nav-{{content_course_data.id}}-1" role="tabpanel" aria-labelledby="nav-home-tab">
+                                {% if content_course_data.description  %}
+                                    {{content_course_data.description}}
+                                {% else %}
+                                    No hay descripción
+                                {% endif %}
+                            </div>
                             <!--Notes-->
-                            <div class="tab-pane fade" id="nav-{{content_course_data.id}}-2" role="tabpanel" aria-labelledby="nav-profile-tab">{{content_course_data.notes}}</div>
+                            <div class="tab-pane fade" id="nav-{{content_course_data.id}}-2" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                {% if content_course_data.notes %}
+                                    {{content_course_data.notes}}
+                                {% else %}
+                                    No hay notas
+                                {% endif %}
+                            </div>
                             <!--Activity-->
                             <div class="tab-pane fade" id="nav-{{content_course_data.id}}-3" role="tabpanel" aria-labelledby="nav-contact-tab">
                                 {% if content_course_data.activity_name %}

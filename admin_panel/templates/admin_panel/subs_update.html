@@ -1,0 +1,55 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Asignar curso
+{% endblock %}
+
+{% block content %}
+<section id="assign_course">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid mt-2">
+                    <div class="container">
+                    <h1 class="display-4">Asignación de cursos</h1>
+                    <p class="lead">Aquí puedes asignar a un usuario un curso creado para que pueda comenzar a aprender sobre un sin fin de temas y actividades de la empresa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info" role="alert">
+            ¡Es muy fácil asignarle un curso a un usuario!
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        Solo selecciona al usuario
+                    </div>
+                    <label>Usuario</label>
+                    {{form.user}}
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="alert alert-danger" role="alert">
+                        Y selecciona el contenido
+                    </div>
+                    <label>Curso</label>
+                    {{form.course}}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <div class="alert alert-danger" role="alert">
+                        Selecciona el Estatus
+                    </div>
+                    <label>Estatus</label>
+                    {{form.status}}
+                </div>
+            </div>
+            <button type="submit" class="mt-4 mb-3 btn btn-primary btn-lg btn-block">Asignar curso</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

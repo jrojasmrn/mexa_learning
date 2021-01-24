@@ -1,0 +1,109 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Cursos
+{% endblock %}
+
+{% block content %}
+<section id="c_subs">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline" id="search-title" method="GET">
+                        <input class="form-control mr-sm-6" type="search" placeholder="Inserta el nombre" aria-label="Search" name="buscar">
+                        <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="submit">Buscar</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="mt-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Usuarios con cursos</li>
+                        <a class="ml-auto btn btn-outline-success" href="{% url 'assign_course' %}">Asignar curso</a>
+                    </ol>
+                </nav>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Curso</th>
+                        <th scope="col">Creado</th>
+                        <th scope="col">Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user_c in user_c %}
+                        <tr>
+                            <th scope="row"><a href="{% url 'update_assign_course' user_c.id %}">{{user_c.user.first_name}}</a></th>
+                            <td>{{user_c.user.last_name}}</td>
+                            <td>{{user_c.course}}</td>
+                            <td>{{user_c.created}}</td>
+                            <td>
+                                {% if user_c.status.id == 1 %}
+                                    <img src="{% static 'core/img/check.png' %}" alt="Si">
+                                {% elif user_c.status.id == 2 %}
+                                    <img src="{% static 'core/img/no_check.png' %}" alt="No">
+                                {% else %}
+                                    {{user_c.status}}
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+                <div class="alert alert-warning" role="alert">
+                    Solicitudes de cursos
+                </div>
+                {% if sols %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Solicitado</th>
+                            <th scope="col">Aceptar</th>
+                            <th scope="col">Rechazar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sols in sols %}
+                            <tr>
+                                <th scope="row">{{sols.user.first_name}}</th>
+                                <td>{{sols.user.last_name}}</td>
+                                <td>{{sols.course}}</td>
+                                <td>{{sols.subscribe_time}}</td>
+                                <td>
+                                    <form method="GET">
+                                        <input hidden type="text" value="1" name="flag">
+                                        <button type="submit" class="btn btn-success" name="aceptar">Aceptar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="GET">
+                                        <input hidden type="text" value="2" name="flag">
+                                        <button type="submit" class="btn btn-danger" name="rechazar">Rechazar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                      <h1 class="display-4">No hay solicitudes</h1>
+                      <p class="lead">Espera a que un usuario solicite acceso a este curso</p>
+                    </div>
+                  </div>
+                {% endif %}
+            </div>  
+        </div>
+    </div>
+</section>
+{% endblock %}

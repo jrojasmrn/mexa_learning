@@ -7,8 +7,8 @@
 
 {% block content %}
     <div class="container">
-        <div class="row mt-3">
-            <div class="col-lg-5 col-md-7 col-12">
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
                     <h1 class="display-4">Base de conocimientos</h1>
@@ -16,43 +16,41 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-7 col-md-5 col-12">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-5 col-12">
                 <!--Barra de busqueda-->
-                <section id="buscar" class="mb-3">
-                    <nav class="navbar navbar-light bg-light">
-                        <form class="form-inline" id="search-title" method="GET">
-                            <input class="form-control mr-sm-6" type="search" placeholder="¿Qué buscamos?" aria-label="Search" name="buscar">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                        </form>
-                    </nav>
-                </section>
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline" id="search-title" method="GET">
+                        <input class="form-control mr-sm-6" type="search" placeholder="¿Qué buscamos?" aria-label="Search" name="buscar">
+                        <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="submit">Buscar</button>
+                    </form>
+                </nav>
                 <!--Barra de busqueda-->
-                <!--Resultado de contenidos-->
-                <section id="resultado">
-                    <div class="container">
-                        <div class="row">
-                            {% for content in contents %}
-                                <div class="col-lg-6 col-12">
-                                    <div class="card mb-3" id="{{content.id}}">
-                                        <a href="{% url 'preview-course' content.id %}">
-                                            <img src="{{content.image.url}}" class="card-img-top" alt="Imagenes de cursos" id="image-courses">
-                                        </a>
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                <h3>{{content.title}}</h3>
-                                                {{content.description}}
-                                            </p>
-                                            <hr>
-                                            <p>{{content.updated}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </section>
-                <!--Resultado de contenidos-->
             </div>
         </div>
+        <section id="contenido">
+            <div class="row mt-2">
+                {% for content in contents %}
+                <div class="col-lg-4">
+                    <!--Resultado de contenidos-->
+                    <div class="card mb-2" id="{{content.id}}">
+                        <a href="{% url 'preview-course' content.id %}">
+                            <img src="{{content.image.url}}" class="card-img-top" alt="Imagenes de cursos" id="baseimage">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <h3>{{content.title}}</h3>
+                                {{content.description}}
+                            </p>
+                            <hr>
+                            <p>{{content.updated}}</p>
+                        </div>
+                    </div>
+                    <!--Resultado de contenidos-->
+                </div>
+                {% endfor %}
+            </div>
+        </section>
     </div>
 {% endblock %}

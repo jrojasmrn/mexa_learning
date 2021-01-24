@@ -1,0 +1,61 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Cursos
+{% endblock %}
+
+{% block content %}
+<section id="admin-course">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="form-inline" id="search-title" method="GET">
+                        <input class="form-control mr-sm-6" type="search" placeholder="Inserta el nombre" aria-label="Search" name="buscar">
+                        <button class="btn btn-outline-success my-2 my-sm-0 ml-1" type="submit">Buscar</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="mt-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Matríz de cursos</li>
+                        <a class="ml-auto btn btn-outline-success" href="{% url 'create_content' %}">Crear nuevo</a>
+                    </ol>
+                </nav>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Imágen</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Creado</th>
+                        <th scope="col">Activo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for content in content %}
+                        <tr>
+                            <th scope="row">
+                                <img id="course_id" src="{{content.image.url}}" alt="course_pic">
+                            </th>
+                            <td><a href="{% url 'admin-content_media' content.id %}">{{content.title}}</a></td>
+                            <td>{{content.created}}</td>
+                            <td>
+                                {% if content.status.id == 1 %}
+                                    <img src="{% static 'core/img/check.png' %}" alt="Si">
+                                {% else %}
+                                    <img src="{% static 'core/img/no_check.png' %}" alt="No">
+                                {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

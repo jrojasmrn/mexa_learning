@@ -7,6 +7,37 @@
 
 {% block content %}
 <section id="tests">
-
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                      <h1 class="display-4">Examen de curso</h1>
+                      <p class="lead">En este momento vas a presentar el examen correspondiente al curso que haz tomado. Prepárate y respira profundo, este examen acredita que haz terminado el curso y obtienes una calificación aprobatoria</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% for test in test %}
+                    <div class="alert alert-success mb-1" role="alert">
+                        {{test.question}}
+                    </div>
+                    <select name="select" class="form-control mb-3" id="sel1">
+                        <option value="none">Elige una opción</option>
+                        <option value="{{test.answer_v}}">{{test.answer_v}}</option>
+                        <option value="{{test.answer_f1}}">{{test.answer_f1}}</option>
+                        <option value="{{test.answer_f2}}">{{test.answer_f2}}</option>
+                        <option value="{{test.answer_f3}}">{{test.answer_f3}}</option>
+                    </select>
+                {% endfor %}
+                <button type="button" class="btn btn-outline-warning btn-lg btn-block mb-3">Terminar examen</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="test">
+    <iframe src="https://view.genial.ly/5fad95150658ac0d12c7723c" style="width: 100%">LINK EXTERNO</iframe>
 </section>
 {% endblock %}

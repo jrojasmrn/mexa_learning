@@ -21,8 +21,10 @@ from django.conf import settings
 urlpatterns = [
     # URLs from App Registration
     path('', include('django.contrib.auth.urls')),
-    # Admin URL
+    # Django Admin URL
     path('admin/', admin.site.urls),
+    # Own Admin URL
+    path('admin-panel/', include('admin_panel.urls')),
     # URLs from App Core
     path('home/', include('core.urls')),
     # URLs from App User_Profile

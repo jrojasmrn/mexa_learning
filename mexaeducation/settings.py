@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Catalogues
     'catalogues',
     # Project apps
+    'admin_panel',
     'core',
     'user_profile',
     'courses',

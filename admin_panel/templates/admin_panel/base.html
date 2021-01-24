@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <!--Enlace CSS estilos-->
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style_panel_user.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style_panel_admin.css' %}">
     
     <title>Mexa-Learning | {% block title %} {% endblock %} </title>
 </head>
@@ -23,7 +25,7 @@
     <header id="header">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{% url 'control-pane' %}">
+                <a class="navbar-brand" href="{% url 'admin-panel' %}">
                     <img id="logo-nav" src="{% static 'core/img/logo.png' %}" alt="Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,38 +33,24 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto">
-                        <li class="nav-item {% if request.path == '/home/' %}active{% endif %}">
-                        <a class="nav-link" href="{% url 'control-pane' %}">Mis cursos<span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/admin-panel/users/' %}active{% endif %}" href="{% url 'users' %}">Usuarios</a>
                         </li>
-                        <li class="nav-item {% if request.path == '/courses/all' %}active{% endif %}">
-                            <a class="nav-link" href="{% url 'courses' %}">Quiero aprender</a>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/admin-panel/admin-courses/' %}active{% endif %}" href="{% url 'admin-courses' %}">Cursos</a>
                         </li>
-                        <li class="nav-item dropdown {% if request.path == '/profile/user-profile' %}active{% endif %}">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/admin-panel/user_subs/' %}active{% endif %}" href="{% url 'user_subs' %}">Subscripciones</a>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Cuenta
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'user-profile' %}">Mi perfil</a>
-                                <div class="dropdown-divider"></div>
-                                {% if request.user.is_staff %}
-                                    <a class="dropdown-item" href="{% url 'admin-panel' %}">Administración</a>
-                                    <div class="dropdown-divider"></div>
-                                {% endif %}
+                                <a class="dropdown-item" href="{% url 'control-pane' %}">Ir a sitio</a>
                                 <a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a>
                             </div>
                         </li>
-                        <!--
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Social
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item disabled" href="#">Chat</a>
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item disabled" href="#">Foro</a>
-                            </div>
-                        </li>
-                        -->
                     </ul>
                 </div>
             </div>
@@ -95,6 +83,7 @@
         </div>
     </footer>
     <!--Fin de footer-->
+
 </body>
 <!--Scripts-->
     <!--JQuery-->

@@ -22,8 +22,12 @@ def dashboard(request, pk, course_name, pk_media):
         obj.save()
         # Obtengo el id del curso
         course_id = obj.course
+    # Obtenemos el nombre de los cursos para mostrar
+    content_course = ContentMedia.objects.filter(
+        Q(content=course_id),
+        Q(status=1)
+    )
     # Obtenemos el contenido del curso filtrando por el id del curso obtenido
-    content_course = ContentMedia.objects.filter(content=course_id)
     content_course_data = ContentMedia.objects.filter(content=course_id, id=pk_media)
     # Función para mandar las actividades de usuarios
     form = UploadFile()
@@ -40,5 +44,5 @@ def dashboard(request, pk, course_name, pk_media):
 
 # Test view
 def tests(request, pk):
-    test = TestCourse.objects.filter(course=pk)
+    test = TestCourse.objects.filter(content=pk)
     return render(request, "dashboard/exams.html", {'test':test})
