@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 # Import models
 from .models import UserProfile, UserCourse
 from courses.models import SubscribeCourse
@@ -10,7 +11,10 @@ from .forms import UpdateProfile
 # User profile view
 def user_profile(request):
     profile = UserProfile.objects.all().filter(user=request.user)
-    content = UserCourse.objects.all().filter(user=request.user)
+    content = UserCourse.objects.all().filter(
+        Q(user=request.user),
+        Q(status=1) | Q(status=3) | Q(status=4)
+    )
     usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=5)
     return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs})
 

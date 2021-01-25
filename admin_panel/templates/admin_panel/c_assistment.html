@@ -1,0 +1,119 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Asistencia de usuario
+{% endblock %}
+
+{% block content %}
+<section id="assistment">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                      <h1 class="display-4">Actividad de usuario</h1>
+                      <p class="lead">Aquí puedes visualizar la actividad del usuario y poder ver su asistencia y su progreso en la plataforma</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col">
+                {% if profile%}
+                    <div class="card-deck">
+                        {% for profile in profile %}
+                            <div class="card">
+                                {% if profile.user_image %}
+                                    <img src="{{profile.user_image.url}}" class="card-img-top" alt="user_image">
+                                {% else %}
+                                    <img src="/media/not_image_user.png" class="card-img-top" alt="user_image">
+                                {% endif %}
+                                
+                                <div class="card-body">
+                                <h5 class="card-title">{{profile.user.get_full_name}}</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Nombre de usuario:<br>{{profile.user.username}}</li>
+                                    {% if profile.location %}
+                                        <li class="list-group-item">Ubicación:<br>{{profile.location}}</li>
+                                    {% else %}
+                                        <li class="list-group-item">Ubicación:<br>No especificado</li>
+                                    {% endif %}
+                                    {% if profile.languaje %}
+                                        <li class="list-group-item">Idioma:<br>{{profile.languaje}}</li>
+                                    {% else %}
+                                        <li class="list-group-item">Idioma:<br>No especificado</li>
+                                    {% endif %}
+                                </ul>
+                                </div>
+                                <div class="card-footer">
+                                <small class="text-muted">Último inicio de sesión: {{profile.user.last_login}}</small>
+                                <hr>
+                                <small class="text-muted">Afiliado desde: {{profile.user.date_joined}}</small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        Este usuario no ha iniciado sesión.
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-8 col-md-8 col">
+                <div class="alert alert-primary" role="alert">
+                    Cursos de usuario
+                </div>
+                {% if course %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Asignado</th>
+                            <th scope="col">Estatus</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in course %}
+                            <tr>
+                                <th scope="row">{{course.course.title}}</th>
+                                <td>{{course.created}}</td>
+                                <td>{{course.status}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay información</p>
+                {% endif %}
+                <hr>
+                <div class="alert alert-success" role="alert">
+                    Registro de asistencia
+                </div>
+                {% if assist %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">Fecha de loggeo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for assist in assist %}
+                            <tr>
+                                <td>{{assist.user.first_name}}</td>
+                                <td>{{assist.user.last_name}}</td>
+                                <td>{{assist.assistance}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay información</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

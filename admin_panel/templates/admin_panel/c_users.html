@@ -33,6 +33,7 @@
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellidos</th>
                         <th scope="col">Correo</th>
+                        <th scope="col">Actividad</th>
                         <th scope="col">Activo</th>
                       </tr>
                     </thead>
@@ -43,7 +44,8 @@
                             <td><a href="{% url 'update_user' users.id %}">{{users.first_name}}</a></td>
                             <td>{{users.last_name}}</td>
                             <td>{{users.email}}</td>
-                            <td>
+                            <td><a href="{% url 'assistment_user' users.id %}" class="btn btn-outline-danger">Ver</a></td>
+                            <td> 
                                 {% if users.is_active == True %}
                                     <img src="{% static 'core/img/check.png' %}" alt="Si">
                                 {% else %}

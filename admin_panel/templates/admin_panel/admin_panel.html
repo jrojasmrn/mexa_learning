@@ -9,11 +9,23 @@
 <section id="Bienvenida">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-lg-8 col-md-8 col-12">
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
                       <h1 class="display-4">Panel de administrador</h1>
                       <p class="lead">En este momento estás en el panel de administrador. Aquí puedes crear o modificar cursos, examenes, usuarios, etc. Recuerda que <b>no debes compartir credenciales de acceso con nadie por seguridad del sitio y de la empresa.</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
+                <div class="card">
+                    <div class="card-header">
+                      Anuncios
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <a href="{% url 'notices_user' %}"><p>Da clic aquí para ver los anuncios del sitio</p></a>
+                        </blockquote>
                     </div>
                 </div>
             </div>

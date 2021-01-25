@@ -1,0 +1,39 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block title %}
+    Crear Anuncios
+{% endblock %}
+
+{% block content %}
+<section id="create_notice">
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta el titulo del anuncio</label>
+                            {{form.title}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta el mensaje del anuncio</label>
+                            {{form.content}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Usuario</label>
+                            {{form.user}}
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-4 mb-3 btn btn-primary btn-lg btn-block">Crear anuncio</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-# Import Django User Model
-from django.contrib.auth.models import User
 # Import User profile models
 from user_profile.models import UserProfile, UserCourse
 # Import Content models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import Status model
 from status.models import Status
+# Import core models
+from core.models import Advertisements, AssistanceUser
 # Import forms
 from .forms import *
 
@@ -223,3 +223,34 @@ def update_user_course(request, pk):
             form.save()
             return redirect('user_subs')
     return render(request, "admin_panel/subs_update.html", {'form': form})
+
+# Notices control view
+def notices_users(request):
+    notices = Advertisements.objects.all()
+    return render(request, "admin_panel/c_notices.html", {'notices': notices})
+
+def create_notice(request):
+    form = CreateAdvertisementForm()
+    # Validamos que formulario sea POST
+    if request.method == 'POST':
+        form = CreateAdvertisementForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-panel')
+    return render(request, "admin_panel/notices_create.html", {'form': form})
+
+def update_notice(request, id_notice):
+    instancia = Advertisements.objects.get(id=id_notice)
+    form = UpdateAdvertisementsForm(instance=instancia)
+    if request.method == 'POST':
+        form = UpdateAdvertisementsForm(request.POST, instance=instancia)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-panel')
+    return render(request, "admin_panel/notices_update.html", {'form': form})
+
+def assistment_user(request, id_user):
+    assist = AssistanceUser.objects.filter(user=id_user)
+    info = UserProfile.objects.filter(user=id_user)
+    user_course = UserCourse.objects.filter(user=id_user)
+    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course})

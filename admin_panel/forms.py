@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import User_profile models
 from user_profile.models import UserCourse
+# Import core models
+from core.models import Advertisements, AssistanceUser
 # Import Form libary
 from django import forms
 
@@ -160,14 +162,38 @@ class UpdateAssignCourseForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'})
         }
 
-# Accept course form
-class AcceptUserCourse(forms.ModelForm):
+# Create advertisements form
+class CreateAdvertisementForm(forms.ModelForm):
     class Meta:
         # Model name
-        model = SubscribeCourse
+        model = Advertisements
         # Model fields
         fields = [
-            'course',
+            'title',
+            'content',
+            'user'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.TextInput(attrs={'class': 'form-control'}),
+            'user': forms.SelectMultiple(attrs={'class': 'form-control'})
+        }
+
+# Update advertisements form
+class UpdateAdvertisementsForm(forms.ModelForm):
+    class Meta:
+        # Model name
+        model = Advertisements
+        # Model fields
+        fields = [
+            'title',
+            'content',
             'user',
             'status'
         ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.TextInput(attrs={'class': 'form-control'}),
+            'user': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control'})
+        }
