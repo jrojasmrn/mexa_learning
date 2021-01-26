@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 # Import User profile models
-from user_profile.models import UserProfile, UserCourse
+from user_profile.models import UserProfile, UserCourse, ActivityUsers
 # Import Content models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import Status model
 from status.models import Status
 # Import core models
 from core.models import Advertisements, AssistanceUser
+# Import dashboard models
+from dashboard.models import CheckMediaUser
 # Import forms
 from .forms import *
 
@@ -229,6 +231,7 @@ def notices_users(request):
     notices = Advertisements.objects.all()
     return render(request, "admin_panel/c_notices.html", {'notices': notices})
 
+# Create notice view
 def create_notice(request):
     form = CreateAdvertisementForm()
     # Validamos que formulario sea POST
@@ -239,6 +242,7 @@ def create_notice(request):
             return redirect('admin-panel')
     return render(request, "admin_panel/notices_create.html", {'form': form})
 
+# Update notice view
 def update_notice(request, id_notice):
     instancia = Advertisements.objects.get(id=id_notice)
     form = UpdateAdvertisementsForm(instance=instancia)
@@ -249,8 +253,10 @@ def update_notice(request, id_notice):
             return redirect('admin-panel')
     return render(request, "admin_panel/notices_update.html", {'form': form})
 
+# Activity user control view
 def assistment_user(request, id_user):
     assist = AssistanceUser.objects.filter(user=id_user)
     info = UserProfile.objects.filter(user=id_user)
     user_course = UserCourse.objects.filter(user=id_user)
-    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course})
+    act_user = ActivityUsers.objects.filter(user=id_user)
+    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course, 'act':act_user})

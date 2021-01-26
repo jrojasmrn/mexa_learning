@@ -87,6 +87,35 @@
                     <p>No hay información</p>
                 {% endif %}
                 <hr>
+                <div class="alert alert-warning" role="alert">
+                    Actividades enviadas
+                </div>
+                {% if act %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Módulo</th>
+                            <th scope="col">Comentario</th>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for act in act %}
+                            <tr>
+                                <td>{{act.content.title}}</td>
+                                <td>{{act.content_media.name}}</td>
+                                <td>{{act.comment}}</td>
+                                <td><a href="{{act.act_file.url}}" class="btn btn-outline-primary" target="_blank">Archivo</a></td>
+                                <td>{{act.created}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay información</p>
+                {% endif %}
                 <div class="alert alert-success" role="alert">
                     Registro de asistencia
                 </div>

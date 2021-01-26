@@ -9,11 +9,13 @@ class UploadFile(forms.ModelForm):
     class Meta:
         # Le pasamos nuestro modelo a una variable interna
         model = ActivityUsers
-
         # Declaramos los campos que estarán dentro de nuestro form
         fields = [
             'comment',
-            'act_file'
+            'act_file',
+            'content',
+            'content_media',
+            'user'
         ]
         # Obtenemos los campos del admin de Django para la integración al template
         widgets = {

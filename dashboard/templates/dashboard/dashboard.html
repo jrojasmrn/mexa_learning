@@ -21,15 +21,20 @@
     <section id="content-course">
         <div class="container-fluid mt-2 mb-2">
             <div class="row">
+                <!--Indice del curso-->
                 <div class="col-lg-2">
-                    {% for usercourse in usercourse %}
-                        {% for content in content_course %}
-                            <div class="alert alert-primary mb-1" role="alert">
-                                <a href="{% url 'dashboard' usercourse.id usercourse.course.title content.id %}">{{content.name}}</a>
+                    
+                    {% for content in content_course %}
+                        {% for usercourse in usercourse %}
+                            <div class="alert alert-{% if content.status.id == 1 %}success{% else %}primary{% endif %} mb-1" role="alert">
+                                <a href="{% url 'dashboard' usercourse.id usercourse.course.title content.content_media.id %}">{{content.content_media.name}}</a>
                             </div>
                         {% endfor %}
                     {% endfor %}
+                    
                 </div>
+                
+                <!--Indice del curso-->
                 <div class="col-lg-10">
                     {% for content_course_data in content_course_data %}
                         <h6>Viendo ahora: <span class="badge badge-info">{{content_course_data.name}}</span></h6>
@@ -79,7 +84,7 @@
                                     <br>
                                     <p>{{content_course_data.activity_description}}</p>
                                     <!--Form para cargar archivo-->
-                                    <form method="POST">
+                                    <form method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <div class="alert alert-danger" role="alert">
@@ -94,6 +99,9 @@
                                             <br>
                                             {{form.comment}}
                                             <br>
+                                            <input hidden type="text" value="{{content_course_data.content.id}}" name="content">
+                                            <input hidden type="text" value="{{content_course_data.id}}" name="content_media">
+                                            <input hidden type="text" value="{{request.user.id}}" name="user">
                                             <button type="submit" class="btn btn-success">Enviar tarea</button>
                                         </div>
                                     </form>
