@@ -73,6 +73,40 @@
                         </div>
                         <br>
                         <hr>
+                        <div class="card border-success mb-3">
+                            <div class="card-header">Mis actividades</div>
+                            <div class="card-body text">
+                                <h5 class="card-title">Actividades enviadas</h5>
+                                {% if act %}
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Curso</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Actividad</th>
+                                            <th scope="col">Calificación</th>
+                                            <th scope="col">Comentario</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for act in act %}
+                                                <tr>
+                                                    <th scope="row">{{act.course}}</th>
+                                                    <td>{{act.created}}</td>
+                                                    <td><a href="{{act.activity.act_file.url}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
+                                                    <td class="table-{% if act.grade.grade == '5' %}danger{% endif %}">{{act.grade}}</td>
+                                                    <td class="table-{% if act.grade.grade == '5' %}danger{% endif %}">{{act.comment}}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No hay actividades</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
                         <div class="card border-info mb-3">
                             <div class="card-header">Mis cursos</div>
                             <div class="card-body">

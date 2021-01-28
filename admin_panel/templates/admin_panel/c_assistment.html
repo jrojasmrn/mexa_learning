@@ -98,7 +98,7 @@
                             <th scope="col">Módulo</th>
                             <th scope="col">Comentario</th>
                             <th scope="col">Actividad</th>
-                            <th scope="col">Fecha</th>
+                            <th scope="col">Calificación</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -107,8 +107,14 @@
                                 <td>{{act.content.title}}</td>
                                 <td>{{act.content_media.name}}</td>
                                 <td>{{act.comment}}</td>
-                                <td><a href="{{act.act_file.url}}" class="btn btn-outline-primary" target="_blank">Archivo</a></td>
-                                <td>{{act.created}}</td>
+                                <td><a href="{% url 'activity_grade' act.user.id act.content.id act.id %}" class="btn btn-outline-primary">Ver</a></td>
+                                <td>
+                                    {% for calf_act in calf_act %}
+                                        {% if act.id == calf_act.activity.id %}
+                                            {{calf_act.grade}}
+                                        {% endif %}
+                                    {% endfor %%}
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

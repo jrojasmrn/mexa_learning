@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(StatesList)
 admin.site.register(LanguajeList)
 admin.site.register(ContentType)
+admin.site.register(UserGrades)

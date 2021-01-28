@@ -40,3 +40,15 @@ class ContentType(models.Model):
     # Cambio de nombre para mostrar información
     def __str__(self):
         return self.name
+
+class UserGrades(models.Model):
+    grade = models.CharField(max_length=254, verbose_name='Calificacion')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Calificacion"
+        verbose_name_plural = "Calificaciones"
+
+    # Cambio de nombre para mostrar información
+    def __str__(self):
+        return self.grade

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 # Import User profile models
-from user_profile.models import UserProfile, UserCourse, ActivityUsers
+from user_profile.models import UserProfile, UserCourse, ActivityUsers, ActivityGrades
 # Import Content models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import Status model
@@ -255,8 +255,31 @@ def update_notice(request, id_notice):
 
 # Activity user control view
 def assistment_user(request, id_user):
+    # Registro de asistencia
     assist = AssistanceUser.objects.filter(user=id_user)
+    # Información de perfil
     info = UserProfile.objects.filter(user=id_user)
+    # Cursos asignados
     user_course = UserCourse.objects.filter(user=id_user)
+    # Actividades enviadas
     act_user = ActivityUsers.objects.filter(user=id_user)
-    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course, 'act':act_user})
+    # Calificación de actividades
+    calf_act = ActivityGrades.objects.filter(
+        Q(user=id_user)
+    )
+    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course, 'act':act_user, 'calf_act': calf_act})
+
+# Activity's grade view
+def activity_grade(request, user, course, act):
+    # Obtenemos la actividad del usuario
+    act_pdf = ActivityUsers.objects.filter(
+        Q(id=act)
+    )
+    form = CreateActivityGreadeForm()
+    # Validamos si se envía un POST
+    if request.method == 'POST':
+        form = CreateActivityGreadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('users')
+    return render(request, "admin_panel/grades_create.html",{'act_pdf': act_pdf, 'form': form})

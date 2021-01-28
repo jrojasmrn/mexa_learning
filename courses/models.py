@@ -31,6 +31,7 @@ class ContentMedia(models.Model):
     notes = models.TextField(verbose_name='Notas', null=True, blank=True, default='No hay notas')
     g_suite = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
     video = models.URLField(verbose_name='Video', null=True, blank=True)
+    genially = models.URLField(verbose_name='Link de Genially', null=True, blank=True)
     pdf = models.FileField(verbose_name='Seleccione documento PDF', null=True, blank=True)
     images = models.ImageField(verbose_name='Seleccione imágen', null=True, blank=True)
     activity_name = models.CharField(max_length=254, verbose_name='Nombre de actividad', null=True, blank=True)

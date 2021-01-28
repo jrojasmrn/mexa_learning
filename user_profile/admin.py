@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(UserCourse)
 admin.site.register(UserProfile)
 admin.site.register(ActivityUsers)
+admin.site.register(ActivityGrades)

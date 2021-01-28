@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 # Import courses models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import User_profile models
-from user_profile.models import UserCourse
+from user_profile.models import UserCourse, ActivityGrades
 # Import core models
 from core.models import Advertisements, AssistanceUser
 # Import Form libary
@@ -92,6 +92,7 @@ class CreateMediaForm(forms.ModelForm):
             'notes',
             'g_suite',
             'video',
+            'genially',
             'pdf',
             'images',
             'activity_name',
@@ -113,6 +114,7 @@ class UpdateMediaForm(forms.ModelForm):
             'notes',
             'g_suite',
             'video',
+            'genially',
             'pdf',
             'images',
             'activity_name',
@@ -125,6 +127,7 @@ class UpdateMediaForm(forms.ModelForm):
             'notes': forms.TextInput(attrs={'class': 'form-control'}),
             'g_suite': forms.URLInput(attrs={'class': 'form-control'}),
             'video': forms.URLInput(attrs={'class': 'form-control'}),
+            'genially': forms.URLInput(attrs={'class': 'form-control'}),
             'activity_name': forms.TextInput(attrs={'class': 'form-control'}),
             'activity_description': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'})
@@ -196,4 +199,21 @@ class UpdateAdvertisementsForm(forms.ModelForm):
             'content': forms.TextInput(attrs={'class': 'form-control'}),
             'user': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'})
+        }
+
+# Create activity user's grade form
+class CreateActivityGreadeForm(forms.ModelForm):
+    class Meta:
+        # Model name
+        model = ActivityGrades
+        # Fields
+        fields = [
+            'user',
+            'course',
+            'activity',
+            'comment',
+            'grade'
+        ]
+        widgets = {
+            'grade': forms.Select(attrs={'class': 'form-control'})
         }

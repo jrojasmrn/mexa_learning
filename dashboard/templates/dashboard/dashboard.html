@@ -23,7 +23,6 @@
             <div class="row">
                 <!--Indice del curso-->
                 <div class="col-lg-2">
-                    
                     {% for content in content_course %}
                         {% for usercourse in usercourse %}
                             <div class="alert alert-{% if content.status.id == 1 %}success{% else %}primary{% endif %} mb-1" role="alert">
@@ -31,24 +30,32 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
-                    
                 </div>
-                
                 <!--Indice del curso-->
                 <div class="col-lg-10">
                     {% for content_course_data in content_course_data %}
                         <h6>Viendo ahora: <span class="badge badge-info">{{content_course_data.name}}</span></h6>
                         <!--Despliegue de multimedia-->
                         {% if content_course_data.g_suite %}
-                            <iframe src="{{content_course_data.g_suite}}?embedded=true"></iframe>
-                        {% elif content_course_data.video %}
+                        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTMKH4Vr_6sx5odRdSssUDj9ujYqtI8GHlp-LIfk_7Mmjj6wZ7uii1xYg_Hx4zqyFa6pio7-ZAwwU5e/embed"></iframe>
+                            <iframe id="docs" src="{{content_course_data.g_suite}}?embed"></iframe>
+                            <hr>
+                        {% endif %}
+                        {% if content_course_data.video %}
                             <iframe src="{{content_course_data.video}}/preview" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        {% elif content_course_data.pdf %}
+                            <hr>
+                        {% endif %}
+                        {% if content_course_data.genially %}
+                            <embed width="100%" height="600px" src="{{content_course_data.genially}}">
+                            <hr>
+                        {% endif %}
+                        {% if content_course_data.pdf %}
                             <embed src="{{content_course_data.pdf.url}}" type="application/pdf" width="100%" height="600px">
-                        {% elif content_course_data.images %}
-                            <img src="{{content_course_data.images.url}}" class="img-fluid" alt="Responsive image">
-                        {% else %}
-                            <p>No hay contenido para mostrar</p>
+                                <hr>
+                        {% endif %}
+                        {% if content_course_data.images %}
+                            <img id="course_image" src="{{content_course_data.images.url}}" class="img-fluid" alt="Responsive image">
+                            <hr>
                         {% endif %}
                         <nav>
                             <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
