@@ -49,7 +49,7 @@
                                         {% if profile.user_image %}
                                             <img src="{{profile.user_image.url}}" alt="user_image" class="img-thumbnail">
                                         {% else %}
-                                            <img src="/media/not_image_user.png" alt="user_image" class="img-thumbnail">
+                                            <img src="{% static 'core/img/not_image_user.png' %}" alt="user_image" class="img-thumbnail">
                                         {% endif %}
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Selecciona una imagen</label>

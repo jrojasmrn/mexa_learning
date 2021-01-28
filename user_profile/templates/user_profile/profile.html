@@ -16,7 +16,7 @@
                                 {% if profile.user_image %}
                                     <img src="{{profile.user_image.url}}" class="card-img-top" alt="user_image">
                                 {% else %}
-                                    <img src="/media/not_image_user.png" class="card-img-top" alt="user_image">
+                                    <img src="{% static 'core/img/not_image_user.png' %}" class="card-img-top" alt="user_image">
                                 {% endif %}
                                 
                                 <div class="card-body">
@@ -91,11 +91,15 @@
                                         <tbody>
                                             {% for act in act %}
                                                 <tr>
-                                                    <th scope="row">{{act.course}}</th>
+                                                    <th scope="row">{{act.content}}</th>
                                                     <td>{{act.created}}</td>
-                                                    <td><a href="{{act.activity.act_file.url}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
-                                                    <td class="table-{% if act.grade.grade == '5' %}danger{% endif %}">{{act.grade}}</td>
-                                                    <td class="table-{% if act.grade.grade == '5' %}danger{% endif %}">{{act.comment}}</td>
+                                                    <td><a href="{{act.act_file.url}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
+                                                    {% for calfs in calfs %}
+                                                        {% if act.id == calfs.activity.id %}
+                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.grade}}</td>
+                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.comment}}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

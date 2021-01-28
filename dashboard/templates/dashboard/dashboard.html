@@ -37,8 +37,15 @@
                         <h6>Viendo ahora: <span class="badge badge-info">{{content_course_data.name}}</span></h6>
                         <!--Despliegue de multimedia-->
                         {% if content_course_data.g_suite %}
-                        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTMKH4Vr_6sx5odRdSssUDj9ujYqtI8GHlp-LIfk_7Mmjj6wZ7uii1xYg_Hx4zqyFa6pio7-ZAwwU5e/embed"></iframe>
-                            <iframe id="docs" src="{{content_course_data.g_suite}}?embed"></iframe>
+                            <iframe id="docs" src="{{content_course_data.g_suite}}?embedded=true"></iframe>
+                            <hr>
+                        {% endif %}
+                        {% if content_course_data.g_suite_slides %}
+                            <iframe id="docs" src="{{content_course_data.g_suite_slides}}/embed"></iframe>
+                            <hr>
+                        {% endif %}
+                        {% if content_course_data.g_suite_sheets %}
+                            <iframe id="docs" src="{{content_course_data.g_suite_sheets}}?widget=true&amp;headers=false""></iframe>
                             <hr>
                         {% endif %}
                         {% if content_course_data.video %}

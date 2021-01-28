@@ -34,27 +34,34 @@
                     <div class="card border-danger mb-3">
                         <div class="card-header">Calificar</div>
                         <div class="card-body text">
+                            {% if val_act %}
+                                <p class="card-text">Esta actividad ya fue calificada</p>
+                                {% for val_act in val_act %}
+                                    Calificación obtenida: <span class="badge badge-info">{{val_act.grade}}</span>
+                                {% endfor %}
+                            {% else %}
                             <p class="card-text">Ingresa una calificación para esta actividad</p>
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="row">
-                                    <div class="col">
-                                        <textarea class="form-control" rows="3" placeholder="Ingresa un comentario" name="comment"></textarea>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <textarea class="form-control" rows="3" placeholder="Ingresa un comentario" name="comment"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col">
-                                        <input hidden type="text" value="{{act_pdf.user.id}}" name="user">
-                                        <input hidden type="text" value="{{act_pdf.content.id}}" name="course">
-                                        <input hidden type="text" value="{{act_pdf.id}}" name="activity">
-                                        {{form.grade}}
+                                    <br>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input hidden type="text" value="{{act_pdf.user.id}}" name="user">
+                                            <input hidden type="text" value="{{act_pdf.content.id}}" name="course">
+                                            <input hidden type="text" value="{{act_pdf.id}}" name="activity">
+                                            {{form.grade}}
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-warning">Calificar</button>
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        <button type="submit" class="btn btn-warning">Calificar</button>
-                                    </div>
-                                </div>
-                            </form>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

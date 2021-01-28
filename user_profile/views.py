@@ -18,12 +18,16 @@ def user_profile(request):
         Q(status=1) | Q(status=3) | Q(status=4)
     )
     # Obtengo las solicites a cursos del usuario
-    usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=5)
+    usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=1)
     # Obtengo las acts del usuario
-    act = ActivityGrades.objects.filter(
+    act = ActivityUsers.objects.filter(
         Q(user=request.user)
     )
-    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs, 'act': act})
+    # Obtendo las calfs del usuario
+    calfs = ActivityGrades.objects.filter(
+        Q(user=request.user)
+    )
+    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs, 'act': act, 'calfs': calfs})
 
 # Update user profile view
 def update_user_profile(request, pk):

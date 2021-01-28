@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from user_profile.models import UserCourse
 from courses.models import ContentMedia, TestCourse
-from status.models import Status
+from status.models import Status, StatusUserCourse
 # Import . models
 from .models import CheckMediaUser
 from django.db.models import Q
@@ -66,7 +66,7 @@ def dashboard(request, pk, course_name, pk_media):
         Q(status=1) | Q(status=3)
     )
     for obj in instancia:
-        new_status = Status.objects.get(status='En proceso')
+        new_status = StatusUserCourse.objects.get(status='En proceso')
         obj.status = new_status
         obj.save()
         # Obtengo el id del curso

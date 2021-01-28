@@ -28,19 +28,7 @@ class LanguajeList(models.Model):
     def __str__(self):
         return '%s' % (self.languaje_name)
 
-# Content type catalogue
-class ContentType(models.Model):
-    name = models.CharField(max_length=254, verbose_name='Tipo de contenido')
-
-    # Cambiar nombre para mostrar
-    class Meta:
-        verbose_name = "Tipo de contenido"
-        verbose_name_plural = "Tipo de contenidos"
-
-    # Cambio de nombre para mostrar información
-    def __str__(self):
-        return self.name
-
+# User Grades model
 class UserGrades(models.Model):
     grade = models.CharField(max_length=254, verbose_name='Calificacion')
 

@@ -1,6 +1,6 @@
 from django.db import models
 # Import Status Models
-from status.models import Status
+from status.models import Status, StatusSubscribeCourse
 # Import catalogues
 from django.contrib.auth.models import User
 # Create your models here.
@@ -30,6 +30,8 @@ class ContentMedia(models.Model):
     description = models.TextField(verbose_name='Descripción', null=True, blank=True, default='No hay descripción')
     notes = models.TextField(verbose_name='Notas', null=True, blank=True, default='No hay notas')
     g_suite = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
+    g_suite_slides = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
+    g_suite_sheets = models.CharField(max_length=254, verbose_name='Documentos Google', null=True, blank=True)
     video = models.URLField(verbose_name='Video', null=True, blank=True)
     genially = models.URLField(verbose_name='Link de Genially', null=True, blank=True)
     pdf = models.FileField(verbose_name='Seleccione documento PDF', null=True, blank=True)
@@ -75,7 +77,7 @@ class SubscribeCourse(models.Model):
     course = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
     user = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name='Usuario')
     subscribe_time = models.DateTimeField(auto_now_add=True, verbose_name='Solicitado')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Status')
+    status = models.ForeignKey(StatusSubscribeCourse, on_delete=models.CASCADE, verbose_name='Status')
 
     # Cambiar nomobre de modelo para mostrar
     class Meta:

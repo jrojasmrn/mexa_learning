@@ -27,7 +27,7 @@
                                 {% if profile.user_image %}
                                     <img src="{{profile.user_image.url}}" class="card-img-top" alt="user_image">
                                 {% else %}
-                                    <img src="/media/not_image_user.png" class="card-img-top" alt="user_image">
+                                    <img src="{% static 'core/img/not_image_user.png' %}" class="card-img-top" alt="user_image">
                                 {% endif %}
                                 
                                 <div class="card-body">

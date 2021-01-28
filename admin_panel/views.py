@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+# import decorations libs
+from django.contrib.admin.views.decorators import staff_member_required
 # Import User profile models
 from user_profile.models import UserProfile, UserCourse, ActivityUsers, ActivityGrades
 # Import Content models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse
 # Import Status model
-from status.models import Status
+from status.models import Status, StatusUserCourse
 # Import core models
 from core.models import Advertisements, AssistanceUser
 # Import dashboard models
@@ -16,10 +18,12 @@ from .forms import *
 # Create your views here.
 
 # Admin Panel View
+@staff_member_required
 def admin_panel(request):
     return render(request, "admin_panel/admin_panel.html")
 
 # Users view
+@staff_member_required
 def users_panel(request):
     # Obtenemos la lista de usuarios
     queryset_name = request.GET.get("buscar")
@@ -34,6 +38,7 @@ def users_panel(request):
     return render(request, "admin_panel/c_users.html", {'users': users, 'admin_users': admin_users})
 
 # Create users view
+@staff_member_required
 def create_user(request):
     # Obtenemos el username del formulario
     form = CreateUserForm()
@@ -45,6 +50,7 @@ def create_user(request):
     return render(request, "admin_panel/users_create.html", {'form': form})
 
 # Update users view
+@staff_member_required
 def update_user(request, id_user):
     instancia = User.objects.get(id=id_user)
     form = UpdateUserForm(instance=instancia)
@@ -57,6 +63,7 @@ def update_user(request, id_user):
     return render(request, "admin_panel/users_update.html", {'form': form})
 
 # Content Header view
+@staff_member_required
 def courses_header(request):
     # Obtenemos la lista de cursos
     queryset_name = request.GET.get("buscar")
@@ -69,6 +76,7 @@ def courses_header(request):
     return render(request, "admin_panel/c_courses.html", {'content': content})
 
 # Create content header
+@staff_member_required
 def create_content(request):
     # Creamos un formulario vacio
     form = CreateCourseForm()
@@ -82,6 +90,7 @@ def create_content(request):
     return render(request, "admin_panel/courses_create.html", {'form':form})
 
 # Update content view
+@staff_member_required
 def update_content(request, id_course):
     instancia = ContentHeader.objects.get(id=id_course)
     form = UpdateCourseForm(instance=instancia)
@@ -95,6 +104,7 @@ def update_content(request, id_course):
     return render(request, "admin_panel/courses_update.html", {'form':form})
 
 # Content media view
+@staff_member_required
 def content_media(request, id_course):
     # Mostramos el content_header para opción de modificar
     content = ContentHeader.objects.filter(id=id_course)
@@ -103,6 +113,7 @@ def content_media(request, id_course):
     return render(request, "admin_panel/c_contet_media.html", {'preview':content, 'media':media})
 
 # Create content media view
+@staff_member_required
 def create_media(request, id_course):
     #Obtenemos el curso por el id
     content = ContentHeader.objects.get(id=id_course)
@@ -117,6 +128,7 @@ def create_media(request, id_course):
     return render(request, "admin_panel/media_create.html", {'form':form, 'content':content})
 
 # Update content media view
+@staff_member_required
 def update_content_media(request, id_media):
     instancia = ContentMedia.objects.get(id=id_media)
     form = UpdateMediaForm(instance=instancia)
@@ -132,17 +144,17 @@ def accept_course(user, course):
     # Validamos que la solicitud exista para modificarla
     validate_data = SubscribeCourse.objects.values().filter(
         Q(user=user),
-        Q(status=5),
+        Q(status=1),
         Q(course=course)
     )
     # Si el registro existe, se actualiza el campo de status
     if len(validate_data) > 0:
         subcribecourse_id = SubscribeCourse.objects.filter(
             Q(user=user),
-            Q(status=5),
+            Q(status=1),
             Q(course=course)
         ).update(
-            status=6
+            status=2
         )
         create_usercourse_fun(user, course)
 
@@ -151,22 +163,22 @@ def refuse_course(user, course):
     # Validamos que la solicitud exista para modificarla
     validate_data = SubscribeCourse.objects.values().filter(
         Q(user=user),
-        Q(status=5),
+        Q(status=1),
         Q(course=course)
     )
     # Si el registro existe, se actualiza el campo de status
     if len(validate_data) > 0:
         subcribecourse_id = SubscribeCourse.objects.filter(
             Q(user=user),
-            Q(status=5),
+            Q(status=1),
             Q(course=course)
         ).update(
-            status=7
+            status=3
         )
 
 # Create user course function
 def create_usercourse_fun(user, course):
-    status = Status.objects.get(id=1)
+    status = StatusUserCourse.objects.get(id=1)
     # Validamos que no exista el registro en la tabla
     validate_data = UserCourse.objects.values().filter(
         Q(user=user),
@@ -180,9 +192,10 @@ def create_usercourse_fun(user, course):
             status=status
         )
 # User Subscribe view
+@staff_member_required
 def subs_control(request):
     #Obtengo las solicitudes de los cursos
-    sols = SubscribeCourse.objects.filter(status=5)
+    sols = SubscribeCourse.objects.filter(status=1)
     # Obtengo todos los cursos de los usuarios
     queryset_name = request.GET.get('buscar')
     user_course = UserCourse.objects.all()
@@ -205,6 +218,7 @@ def subs_control(request):
     return render(request, "admin_panel/c_subs.html", {'user_c': user_course, 'sols':sols})
 
 # Create User-Course view
+@staff_member_required
 def create_user_course(request):
     form = AssignCourseForm()
     # Validamos si se envía un formulario POST
@@ -216,6 +230,7 @@ def create_user_course(request):
     return render(request, "admin_panel/subs_create.html", {'form': form})
 
 # Update User-course view
+@staff_member_required
 def update_user_course(request, pk):
     instancia = UserCourse.objects.get(id=pk)
     form = UpdateAssignCourseForm(instance=instancia)
@@ -227,11 +242,13 @@ def update_user_course(request, pk):
     return render(request, "admin_panel/subs_update.html", {'form': form})
 
 # Notices control view
+@staff_member_required
 def notices_users(request):
     notices = Advertisements.objects.all()
     return render(request, "admin_panel/c_notices.html", {'notices': notices})
 
 # Create notice view
+@staff_member_required
 def create_notice(request):
     form = CreateAdvertisementForm()
     # Validamos que formulario sea POST
@@ -243,6 +260,7 @@ def create_notice(request):
     return render(request, "admin_panel/notices_create.html", {'form': form})
 
 # Update notice view
+@staff_member_required
 def update_notice(request, id_notice):
     instancia = Advertisements.objects.get(id=id_notice)
     form = UpdateAdvertisementsForm(instance=instancia)
@@ -254,6 +272,7 @@ def update_notice(request, id_notice):
     return render(request, "admin_panel/notices_update.html", {'form': form})
 
 # Activity user control view
+@staff_member_required
 def assistment_user(request, id_user):
     # Registro de asistencia
     assist = AssistanceUser.objects.filter(user=id_user)
@@ -270,10 +289,17 @@ def assistment_user(request, id_user):
     return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course, 'act':act_user, 'calf_act': calf_act})
 
 # Activity's grade view
+@staff_member_required
 def activity_grade(request, user, course, act):
     # Obtenemos la actividad del usuario
     act_pdf = ActivityUsers.objects.filter(
         Q(id=act)
+    )
+    # Validamos si ya existe una calificación para ésta actividad
+    validate_act = ActivityGrades.objects.filter(
+        Q(user=user),
+        Q(course=course),
+        Q(activity=act)
     )
     form = CreateActivityGreadeForm()
     # Validamos si se envía un POST
@@ -282,4 +308,4 @@ def activity_grade(request, user, course, act):
         if form.is_valid():
             form.save()
             return redirect('users')
-    return render(request, "admin_panel/grades_create.html",{'act_pdf': act_pdf, 'form': form})
+    return render(request, "admin_panel/grades_create.html",{'act_pdf': act_pdf, 'form': form, 'val_act': validate_act})
