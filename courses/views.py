@@ -26,7 +26,7 @@ def subs_course(content, user):
     subscribe_course_id = SubscribeCourse.objects.create(
         subscribe_time=datetime.now(),
         course_id=content,
-        status_id=5, # Viene por default, ya que es el ID - En espera
+        status_id=1, # Viene por default, ya que es el ID - En espera
         user_id=user
     )
 

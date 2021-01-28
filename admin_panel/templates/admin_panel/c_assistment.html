@@ -27,7 +27,7 @@
                                 {% if profile.user_image %}
                                     <img src="{{profile.user_image.url}}" class="card-img-top" alt="user_image">
                                 {% else %}
-                                    <img src="/media/not_image_user.png" class="card-img-top" alt="user_image">
+                                    <img src="{% static 'core/img/not_image_user.png' %}" class="card-img-top" alt="user_image">
                                 {% endif %}
                                 
                                 <div class="card-body">
@@ -87,6 +87,41 @@
                     <p>No hay información</p>
                 {% endif %}
                 <hr>
+                <div class="alert alert-warning" role="alert">
+                    Actividades enviadas
+                </div>
+                {% if act %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Curso</th>
+                            <th scope="col">Módulo</th>
+                            <th scope="col">Comentario</th>
+                            <th scope="col">Actividad</th>
+                            <th scope="col">Calificación</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for act in act %}
+                            <tr>
+                                <td>{{act.content.title}}</td>
+                                <td>{{act.content_media.name}}</td>
+                                <td>{{act.comment}}</td>
+                                <td><a href="{% url 'activity_grade' act.user.id act.content.id act.id %}" class="btn btn-outline-primary">Ver</a></td>
+                                <td>
+                                    {% for calf_act in calf_act %}
+                                        {% if act.id == calf_act.activity.id %}
+                                            {{calf_act.grade}}
+                                        {% endif %}
+                                    {% endfor %%}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay información</p>
+                {% endif %}
                 <div class="alert alert-success" role="alert">
                     Registro de asistencia
                 </div>

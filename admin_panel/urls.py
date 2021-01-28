@@ -25,5 +25,6 @@ urlpatterns = [
     path('create_notice/', views.create_notice, name='create_notice'),
     path('update_notice/<int:id_notice>', views.update_notice, name='update_notice'),
     # URLS for assistment user
-    path('assistment_user/<int:id_user>', views.assistment_user, name='assistment_user')
+    path('assistment_user/<int:id_user>', views.assistment_user, name='assistment_user'),
+    path('grades/<int:user>/<int:course>/<int:act>', views.activity_grade, name='activity_grade'),
 ]

@@ -1,15 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from courses.models import ContentHeader, ContentMedia
-from status.models import Status
-from catalogues.models import StatesList, LanguajeList
+from status.models import StatusUserCourse, StatusSubscribeCourse
+from catalogues.models import StatesList, LanguajeList, UserGrades
 
 # Create your models here.
 
 class UserCourse(models.Model):
     user = models.ForeignKey(User, verbose_name='Nombre de usuario', on_delete=models.CASCADE)
     course = models.ForeignKey(ContentHeader, verbose_name='Nombre de curso', on_delete=models.CASCADE)
-    status = models.ForeignKey(Status, verbose_name='Status', on_delete=models.CASCADE, default=1)
+    status = models.ForeignKey(StatusUserCourse, verbose_name='Status', on_delete=models.CASCADE, default=1)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
     updated = models.DateTimeField(auto_now=True, verbose_name='Modificado')
 
@@ -58,3 +58,21 @@ class ActivityUsers(models.Model):
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return 'Actividad de %s - %s' % (self.user.get_full_name(), self.content)
+
+# Homework's grade users
+class ActivityGrades(models.Model):
+    activity = models.ForeignKey(ActivityUsers, on_delete=models.CASCADE, verbose_name='Actividad')
+    course = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    grade = models.ForeignKey(UserGrades, on_delete=models.CASCADE, verbose_name='Calificacion', default='NA')
+    comment = models.TextField(verbose_name='Comentario')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Calificaciones de usuario"
+        verbose_name_plural = "Calificaciones de usuarios"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return 'Calificacion de %s - %s' % (self.user, self.course)

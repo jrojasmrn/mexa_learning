@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 # Import models
-from .models import UserProfile, UserCourse
+from .models import *
 from courses.models import SubscribeCourse
 # Import Forms
 from .forms import UpdateProfile
@@ -10,13 +10,24 @@ from .forms import UpdateProfile
 
 # User profile view
 def user_profile(request):
+    # Obtengo los datos del perfil del usuario
     profile = UserProfile.objects.all().filter(user=request.user)
+    # Obtengo los cursos del usuario
     content = UserCourse.objects.all().filter(
         Q(user=request.user),
         Q(status=1) | Q(status=3) | Q(status=4)
     )
-    usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=5)
-    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs})
+    # Obtengo las solicites a cursos del usuario
+    usersubs = SubscribeCourse.objects.all().filter(user=request.user, status=1)
+    # Obtengo las acts del usuario
+    act = ActivityUsers.objects.filter(
+        Q(user=request.user)
+    )
+    # Obtendo las calfs del usuario
+    calfs = ActivityGrades.objects.filter(
+        Q(user=request.user)
+    )
+    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs, 'act': act, 'calfs': calfs})
 
 # Update user profile view
 def update_user_profile(request, pk):
