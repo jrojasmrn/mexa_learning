@@ -53,24 +53,49 @@ class ContentMedia(models.Model):
     def __str__(self):
         return "Contenido %s de curso %s" % (self.name, self.content)
 
-# Test courses model
-class TestCourse(models.Model):
-    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Nombre de curso')
+# Questions model
+class QuestionsTest(models.Model):
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
     question = models.CharField(max_length=254, verbose_name='Pregunta')
-    answer_v = models.CharField(max_length=254, verbose_name='Respuesta correcta')
-    answer_f1 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
-    answer_f2 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
-    answer_f3 = models.CharField(max_length=254, verbose_name='Respuesta incorrecta')
 
     # Cambiar nombre de modelo para mostrar
     class Meta:
-        verbose_name = "Examen"
-        verbose_name_plural = "Examenes"
-        ordering = ['content']
+        verbose_name = "Pregunta"
+        verbose_name_plural = "Preguntas"
 
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return "Pregunta %s" % (self.question)
+
+# Answers model
+class AnswersTest(models.Model):
+    question = models.ForeignKey(QuestionsTest, on_delete=models.CASCADE, verbose_name='Pregunta')
+    answer = models.CharField(max_length=254, verbose_name='Respuesta')
+    is_correct = models.BooleanField(verbose_name='Correcta')
+
+    # Cambiar nombre de modelo para mostrar
+    class Meta:
+        verbose_name = "Respuesta"
+        verbose_name_plural = "Respuestas"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return "Respuesta %s" % (self.answer)
+
+# User Answers model
+class AnsUserTest(models.Model):
+    answer = models.ForeignKey(AnswersTest, on_delete=models.CASCADE, verbose_name='Respuesta')
+    course = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+
+    # Cambiar nombre de modelo para mostrar
+    class Meta:
+        verbose_name = "Resp Usuario"
+        verbose_name_plural = "Resp Usuarios"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return "Respuesta de %s" % (self.user)
 
 # Subscribe course model
 class SubscribeCourse(models.Model):

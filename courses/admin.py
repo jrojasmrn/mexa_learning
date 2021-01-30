@@ -6,5 +6,7 @@ from .models import *
 
 admin.site.register(ContentHeader)
 admin.site.register(ContentMedia)
-admin.site.register(TestCourse)
+admin.site.register(QuestionsTest)
+admin.site.register(AnswersTest)
+admin.site.register(AnsUserTest)
 admin.site.register(SubscribeCourse)

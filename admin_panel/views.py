@@ -5,7 +5,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 # Import User profile models
 from user_profile.models import UserProfile, UserCourse, ActivityUsers, ActivityGrades
 # Import Content models
-from courses.models import ContentHeader, ContentMedia, SubscribeCourse
+from courses.models import ContentHeader, ContentMedia, SubscribeCourse, QuestionsTest, AnswersTest
 # Import Status model
 from status.models import Status, StatusUserCourse
 # Import core models
@@ -110,7 +110,11 @@ def content_media(request, id_course):
     content = ContentHeader.objects.filter(id=id_course)
     # Obtenemos el contenido total dentro del curso
     media = ContentMedia.objects.filter(content=id_course)
-    return render(request, "admin_panel/c_contet_media.html", {'preview':content, 'media':media})
+    # Validamos si existe un examen para el curso
+    val_exa = QuestionsTest.objects.filter(
+        Q(content=id_course)
+    )
+    return render(request, "admin_panel/c_contet_media.html", {'preview':content, 'media':media, 'val_exa': val_exa})
 
 # Create content media view
 @staff_member_required
@@ -286,7 +290,14 @@ def assistment_user(request, id_user):
     calf_act = ActivityGrades.objects.filter(
         Q(user=id_user)
     )
-    return render(request, "admin_panel/c_assistment.html", {'assist': assist, 'profile': info, 'course': user_course, 'act':act_user, 'calf_act': calf_act})
+    return render(request, "admin_panel/c_assistment.html",
+                  {
+                      'assist': assist,
+                      'profile': info,
+                      'course': user_course,
+                      'act': act_user,
+                      'calf_act': calf_act
+                  })
 
 # Activity's grade view
 @staff_member_required
@@ -309,3 +320,7 @@ def activity_grade(request, user, course, act):
             form.save()
             return redirect('users')
     return render(request, "admin_panel/grades_create.html",{'act_pdf': act_pdf, 'form': form, 'val_act': validate_act})
+
+# Create examen course view
+def create_examen(request, id_course):
+    return render(request, "admin_panel/test_create.html")

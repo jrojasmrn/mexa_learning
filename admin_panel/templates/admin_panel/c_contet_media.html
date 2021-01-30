@@ -66,6 +66,21 @@
                         </div>
                       </div>
                     {% endif %}
+                    <nav aria-label="breadcrumb" class="mt-2">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">Examen de curso</li>
+                            {% if not val_exa %}
+                                <a class="ml-auto btn btn-outline-success" href="{% url 'create_exam' preview.id %}">Crear nuevo</a>
+                            {% endif %}
+                        </ol>
+                    </nav>
+                    {% if val_exa %}
+                        {% for val in val_exa %}
+                            <a href="#">Examen de {{val.content}}</a>
+                        {% endfor %}
+                    {% else %}
+                        <p>No hay examen para este curso</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
