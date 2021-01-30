@@ -12,7 +12,6 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">{{usercourse.course.title}} | {{usercourse.user.get_full_name}}</li>
-                  <a class="ml-auto btn btn-outline-warning" href="{% url 'test_course' usercourse.course.id %}">Examen</a>
                 </ol>
             </nav>
         </div>
@@ -30,6 +29,19 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
+                    <!--Validación de examen-->
+                    {% if val_exa %}
+                        {% for usercourse_va in usercourse %}
+                            <div class="alert alert-danger mb-1" role="alert">
+                                <a href="{% url 'test_course' usercourse_va.course.id %}">Haz el Examen</a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-danger mb-1" role="alert">
+                            <a href="#">Finalizar curso</a>
+                        </div>
+                    {% endif %}
+                    <!--Validación de examen-->
                 </div>
                 <!--Indice del curso-->
                 <div class="col-lg-10">

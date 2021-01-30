@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from user_profile.models import UserCourse
-from courses.models import ContentMedia, TestCourse
+from courses.models import ContentMedia, QuestionsTest, AnswersTest, AnsUserTest
 from status.models import Status, StatusUserCourse
 # Import . models
 from .models import CheckMediaUser
@@ -78,6 +78,10 @@ def dashboard(request, pk, course_name, pk_media):
         Q(course=course_id),
         Q(user=request.user)
     )
+    #Validamos que existe examen para el curso
+    val_exa = QuestionsTest.objects.filter(
+        Q(content=course_id)
+    )
     # Actualizamos status de la clase
     check_module_user(request.user, course_id, pk_media)
     # Obtenemos el contenido del curso filtrando por el id del curso obtenido
@@ -89,9 +93,45 @@ def dashboard(request, pk, course_name, pk_media):
         if form.is_valid():
             form.save()
             return redirect('control-pane')
-    return render(request, "dashboard/dashboard.html",{'form':form, 'usercourse': instancia, 'content_course': content_course, 'content_course_data':content_course_data})
+    return render(request, "dashboard/dashboard.html",
+                {
+                    'form': form,
+                    'usercourse': instancia,
+                    'content_course': content_course,
+                    'content_course_data': content_course_data,
+                    'val_exa': val_exa,
+                })
 
 # Test view
 def tests(request, pk):
-    test = TestCourse.objects.filter(content=pk)
-    return render(request, "dashboard/exams.html", {'test': test})
+    # Obtenemos la información del examen
+    question_data = QuestionsTest.objects.values().filter(
+        Q(content=pk)
+    ).order_by(
+        'question'
+    )
+    answer_data = AnswersTest.objects.values().filter(
+        Q(question__content=pk)
+    ).order_by(
+        'answer'
+    )
+    # Creamos una lista y dict vacios
+    list_preguntas = []
+    # Iteramos en las preguntas
+    for data_q in question_data:
+        # Agregamos la pregunta al dict
+        dict_preguntas = {}
+        dict_preguntas['question'] = data_q['question']
+        count = 1
+        # Iteramos en las respuestas
+        for data_a in answer_data:
+            # Validamos que la respuesta corresponda con la pregunta
+            if data_q['id'] == data_a['question_id']:
+                # Creamos un contador para aumentar el key del dict para las respuetas
+                cont_answer = 'r_'+str(count)
+                count += 1
+                # Vamos agregando las respuestas con ayuda del contador
+                dict_preguntas[cont_answer] = data_a['answer']
+        # Agregamos el dict a una lista, para tener una lista de dicts
+        list_preguntas.append(dict_preguntas)
+    return render(request, "dashboard/exams.html", {'test': list_preguntas})

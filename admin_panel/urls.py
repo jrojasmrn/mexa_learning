@@ -27,4 +27,6 @@ urlpatterns = [
     # URLS for assistment user
     path('assistment_user/<int:id_user>', views.assistment_user, name='assistment_user'),
     path('grades/<int:user>/<int:course>/<int:act>', views.activity_grade, name='activity_grade'),
+    # URLS for Exams Courses
+    path('create_exam/<int:id_course>', views.create_examen, name='create_exam')
 ]
