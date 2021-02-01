@@ -7,3 +7,4 @@ from .models import *
 admin.site.register(Status)
 admin.site.register(StatusUserCourse)
 admin.site.register(StatusSubscribeCourse)
+admin.site.register(UserGradeStatus)

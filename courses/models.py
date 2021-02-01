@@ -85,6 +85,7 @@ class AnswersTest(models.Model):
 # User Answers model
 class AnsUserTest(models.Model):
     answer = models.ForeignKey(AnswersTest, on_delete=models.CASCADE, verbose_name='Respuesta')
+    question = models.ForeignKey(QuestionsTest, on_delete=models.CASCADE, verbose_name='Pregunta', default='')
     course = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
 

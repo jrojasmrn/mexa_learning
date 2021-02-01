@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}
+    Examen de curso
+{% endblock %}
+
+{% block content %}
+<section id="results">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% for grade in user_grade %}
+                    {% if grade.calf == '5' %}
+                        <div class="alert alert-secondary mt-2" role="alert">
+                            <h4 class="alert-heading">Ups...</h4>
+                            <p>Desgraciadamente no has aprobado el examen del curso. Esto no debe ser motivo para rendirse, habla con el personal de Desarrollo Organizacional y solicita una segunda oportunidad de tomar el curso.</p>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-success mt-2" role="alert">
+                            <h4 class="alert-heading">¡Felicidades!</h4>
+                            <p>Aww yeah, has finalizado el curso de <b>{{grade.content.title}}</b> de manera satisfactoria. Eso quiere decir que has aprendido sobre los diferentes temas del curso de manera correcta y ahora estás más cerca de ser un experto en el tema.</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col">
+                <div class="card border-danger mb-3">
+                    <div class="card-header">Mis respuestas</div>
+                    <div class="card-body text">
+                        {% for user_ans in user_ans %}
+                            <h6>{{user_ans.question.question}}</h6>
+                            <small>-{{user_ans.answer.answer}}</small><br>
+                            {% if user_ans.answer.is_correct == True %}
+                                <span class="badge badge-success">Correcta</span>
+                            {% else %}
+                                <span class="badge badge-danger">Incorrecta</span>
+                            {% endif %}
+                            <hr>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

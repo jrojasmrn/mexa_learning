@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from courses.models import ContentHeader, ContentMedia
-from status.models import StatusUserCourse, StatusSubscribeCourse
+from status.models import StatusUserCourse, StatusSubscribeCourse, UserGradeStatus
 from catalogues.models import StatesList, LanguajeList, UserGrades
 
 # Create your models here.
@@ -70,9 +70,26 @@ class ActivityGrades(models.Model):
 
     # Cambiar nombre para mostrar
     class Meta:
-        verbose_name = "Calificaciones de usuario"
-        verbose_name_plural = "Calificaciones de usuarios"
+        verbose_name = "Calificaciones de actividades"
+        verbose_name_plural = "Calificaciones de actividades"
 
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return 'Calificacion de %s - %s' % (self.user, self.course)
+
+# User course grade's model
+class UserCourseGrade(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
+    calf = models.CharField(max_length=254, verbose_name='Calificacion')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+    status = models.ForeignKey(UserGradeStatus, on_delete=models.CASCADE, verbose_name='Status')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Calificaciones de curso"
+        verbose_name_plural = "Calificaciones de cursos"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return 'Calificacion de %s - %s' % (self.user, self.content)

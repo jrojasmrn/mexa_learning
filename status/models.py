@@ -33,3 +33,14 @@ class StatusSubscribeCourse(models.Model):
 
     def __str__(self):
         return self.status
+
+# User Course grades Status
+class UserGradeStatus(models.Model):
+    status = models.CharField(max_length=50, verbose_name='Status')
+
+    class Meta:
+        verbose_name = 'Course grade Status'
+        verbose_name_plural = 'Course grade Status'
+
+    def __str__(self):
+        return self.status

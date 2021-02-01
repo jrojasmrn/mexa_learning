@@ -32,7 +32,7 @@
                                         <a href="{% url 'dashboard' usercourse.id usercourse.course.title 0 %}" class="btn btn-outline-warning">Continuar curso</a>
                                     {% elif usercourse.status.id == 4%}
                                         <div class="alert alert-success" role="alert">
-                                            Has terminado este curso, <b>¡Felicidades!</b>
+                                            <b>Ya has terminado este curso</b>
                                         </div>
                                     {% endif %}
                                 </div>
