@@ -319,8 +319,59 @@ def activity_grade(request, user, course, act):
         if form.is_valid():
             form.save()
             return redirect('users')
-    return render(request, "admin_panel/grades_create.html",{'act_pdf': act_pdf, 'form': form, 'val_act': validate_act})
+    return render(request, "admin_panel/grades_create.html", {'act_pdf': act_pdf, 'form': form, 'val_act': validate_act})
+
+# Create question test function
+def create_question_test(id_course, question, c_answer, f1_answer, f2_answer, f3_answer):
+    # Obtenemos instancia de ContentHeader
+    content = ContentHeader.objects.get(id=id_course)
+    # Validamos que la pregunta no exista
+    validate_data = QuestionsTest.objects.values().filter(
+        Q(content=content),
+        Q(question=str(question))
+    )
+    if len(validate_data) == 0:
+        # Insertamos el nuevo registro
+        question_test_id = QuestionsTest.objects.create(
+            content=content,
+            question=str(question)
+        )
+        # Insertamos las respuestas
+        c_answer_id = AnswersTest.objects.create(
+            question=question_test_id,
+            answer=c_answer,
+            is_correct=1
+        )
+        f1_answer_id = AnswersTest.objects.create(
+            question=question_test_id,
+            answer=f1_answer,
+            is_correct=0
+        )
+        f2_answer_id = AnswersTest.objects.create(
+            question=question_test_id,
+            answer=f2_answer,
+            is_correct=0
+        )
+        f3_answer_id = AnswersTest.objects.create(
+            question=question_test_id,
+            answer=f3_answer,
+            is_correct=0
+        )
 
 # Create examen course view
 def create_examen(request, id_course):
-    return render(request, "admin_panel/test_create.html")
+    # Obtenemos los datos del examen
+    ques_data = QuestionsTest.objects.filter(
+        Q(content=id_course)
+    )
+    # Obtenemos los datos del formulario
+    query_question = request.POST.get("question")
+    query_c_answer = request.POST.get("c_answer")
+    query_f1 = request.POST.get("f1_answer")
+    query_f2 = request.POST.get("f2_answer")
+    query_f3 = request.POST.get("f3_answer")
+    # Validamos que el el formulario sea POST
+    if request.method == 'POST':
+        # Llamo a la función para ingresar datos
+        create_question_test(id_course, query_question, query_c_answer, query_f1, query_f2, query_f3)
+    return render(request, "admin_panel/test_create.html", {'ques_data': ques_data})

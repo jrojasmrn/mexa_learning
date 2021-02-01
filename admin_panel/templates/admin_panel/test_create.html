@@ -18,6 +18,63 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <!--Creamos nuevas preguntas-->
+            <div class="col-lg-8 col-md-8 col mb-3">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Escribe una pregunta</label>
+                        <input type="text" class="form-control" placeholder="¿Quién descubrió América?" name="question">
+                    </div>
+                    <div class="form-group">
+                        <label>Escribe la respuesta correcta</label>
+                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser correcta" name="c_answer">
+                    </div>
+                    <hr>
+                    <div class="alert alert-danger" role="alert">
+                        Ojo: Estas respuestas deben ser incorrectas.
+                      </div>
+                    <div class="form-group">
+                        <label>Escribe la respuesta incorrecta</label>
+                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f1_answer">
+                    </div>
+                    <div class="form-group">
+                        <label>Escribe la respuesta incorrecta</label>
+                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f2_answer">
+                    </div>
+                    <div class="form-group">
+                        <label>Escribe la respuesta incorrecta</label>
+                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f3_answer">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Agregar pregunta</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <!--Mostramos las preguntas del examen creadas-->
+            {% if ques_data %}
+                <div class="col-lg-6">
+                    <h5>Preguntas del examen</h5>
+                    {% for ques_data in ques_data %}
+                        <div class="alert alert-info" role="alert">
+                            {{ques_data.question}}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-danger mb-3">
+                        <div class="card-header">Termina el examen</div>
+                        <div class="card-body text">
+                        <h5 class="card-title">Validación del examen</h5>
+                            <p class="card-text">Valida las preguntas que has creado, ya que una vez creado el examen solo podrá ser editado por un usuario administrador. <br>Una vez que esté confirmado da clic en publicar examen. </p>
+                            <br>
+                            <a href="{% url 'admin-courses' %}" class="btn btn-primary">Publicar examen</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </section>
 {% endblock %}

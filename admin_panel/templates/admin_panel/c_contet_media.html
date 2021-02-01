@@ -75,9 +75,7 @@
                         </ol>
                     </nav>
                     {% if val_exa %}
-                        {% for val in val_exa %}
-                            <a href="#">Examen de {{val.content}}</a>
-                        {% endfor %}
+                    <h5>Examen de curso {{preview.title}} <span class="badge badge-success">Publicado</span></h5>
                     {% else %}
                         <p>No hay examen para este curso</p>
                     {% endif %}
