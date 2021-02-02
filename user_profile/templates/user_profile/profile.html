@@ -66,6 +66,7 @@
                             {% if user_certs %}
                                 {% for user_certs in user_certs %}
                                     <a href="/media/{{user_certs.cert_file}}" target="_blank">{{user_certs.content.title}}</a>
+                                    <br>
                                 {% endfor %}
                             {% else %}
                                 <h5 class="card-title">¡No tienes certificados!</h5>

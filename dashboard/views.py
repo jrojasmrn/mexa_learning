@@ -152,7 +152,8 @@ def tests(request, pk):
             # Validamos que el registro no exista
             validate_data = AnsUserTest.objects.values().filter(
                 Q(user=request.user),
-                Q(course=user_course)
+                Q(course=user_course),
+                Q(question=question_instance.id)
             )
             if len(validate_data) == 0:
                 # Creamos el registro en la tabla
@@ -166,14 +167,15 @@ def tests(request, pk):
                 # Actualizamos los registros del usuario
                 ans_user_id = AnsUserTest.objects.filter(
                     Q(user=request.user),
-                    Q(course=user_course)
+                    Q(course=user_course),
+                    Q(question=question_instance.id)
                 ).update(
                     answer=answer_instance,
                     course=user_course,
                     user=request.user,
                     question=question_instance
                 )
-            return redirect('user_results', pk)
+        return redirect('user_results', pk)
     return render(request, "dashboard/exams.html", {'test': list_preguntas})
 
 # Create certificate function

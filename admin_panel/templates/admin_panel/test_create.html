@@ -25,11 +25,11 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label>Escribe una pregunta</label>
-                        <input type="text" class="form-control" placeholder="¿Quién descubrió América?" name="question">
+                        <input required type="text" class="form-control" placeholder="¿Quién descubrió América?" name="question">
                     </div>
                     <div class="form-group">
                         <label>Escribe la respuesta correcta</label>
-                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser correcta" name="c_answer">
+                        <input required type="text" class="form-control" placeholder="Esta respuesta debe ser correcta" name="c_answer">
                     </div>
                     <hr>
                     <div class="alert alert-danger" role="alert">
@@ -37,15 +37,15 @@
                       </div>
                     <div class="form-group">
                         <label>Escribe la respuesta incorrecta</label>
-                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f1_answer">
+                        <input required type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f1_answer">
                     </div>
                     <div class="form-group">
                         <label>Escribe la respuesta incorrecta</label>
-                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f2_answer">
+                        <input required type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f2_answer">
                     </div>
                     <div class="form-group">
                         <label>Escribe la respuesta incorrecta</label>
-                        <input type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f3_answer">
+                        <input required type="text" class="form-control" placeholder="Esta respuesta debe ser incorrecta" name="f3_answer">
                     </div>
                     <button type="submit" class="btn btn-success btn-lg btn-block">Agregar pregunta</button>
                 </form>
