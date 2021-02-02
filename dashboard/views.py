@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from user_profile.models import UserCourse, UserCourseGrade
+from user_profile.models import UserCourse, UserCourseGrade, UserCertificates
 from courses.models import ContentHeader, ContentMedia, QuestionsTest, AnswersTest, AnsUserTest
 from status.models import Status, StatusUserCourse, UserGradeStatus
+from django.contrib.auth.models import User
 # Import . models
 from .models import CheckMediaUser
 from django.db.models import Q
@@ -148,15 +149,118 @@ def tests(request, pk):
             answer_instance = AnswersTest.objects.get(answer=user_ans)
             # Obtenemos instancia de curso
             user_course = ContentHeader.objects.get(id=pk)
-            # Creamos el registro en la tabla
-            ans_user_id = AnsUserTest.objects.create(
-                answer=answer_instance,
-                course=user_course,
-                user=request.user,
-                question=question_instance
+            # Validamos que el registro no exista
+            validate_data = AnsUserTest.objects.values().filter(
+                Q(user=request.user),
+                Q(course=user_course)
             )
-        return redirect('user_results', pk)
+            if len(validate_data) == 0:
+                # Creamos el registro en la tabla
+                ans_user_id = AnsUserTest.objects.create(
+                    answer=answer_instance,
+                    course=user_course,
+                    user=request.user,
+                    question=question_instance
+                )
+            else:
+                # Actualizamos los registros del usuario
+                ans_user_id = AnsUserTest.objects.filter(
+                    Q(user=request.user),
+                    Q(course=user_course)
+                ).update(
+                    answer=answer_instance,
+                    course=user_course,
+                    user=request.user,
+                    question=question_instance
+                )
+            return redirect('user_results', pk)
     return render(request, "dashboard/exams.html", {'test': list_preguntas})
+
+# Create certificate function
+def create_certificate(user, content):
+    # Reprot Lab library
+    from reportlab.pdfgen import canvas
+
+    # Obtenemos la información de la calf
+    user_calf = UserCourseGrade.objects.filter(
+        Q(user=user),
+        Q(content=content)
+    )
+    for data in user_calf:
+        cert_user = data.user.get_full_name()
+        cert_course = data.content.title
+        cert_date = data.created
+        # Creamos un identificador para el nombre del certificado
+        cert_id = '%s_%s' % (data.user.id, data.content.id)
+    # PDF Content:
+    filename = 'certificate_%s.pdf' % (cert_id)
+    documenttitle = 'Certificado de termino -' + cert_user
+    title = 'Otorga a'
+    user = '' + cert_user
+    label_course = 'El siguiente certificado, por acreditar con éxito el curso de'
+    course_name = '' + cert_course
+    create_date = 'Otorgado el día ' + str(cert_date)
+    congra_text = 'Por parte del equipo de Mexamerik, te felicitamos por seguir aprendiendo en cada momento.'
+    ceo_name = 'Lic. Pablo Ocampo'
+    rh_manager = 'Lic. Jorge N'
+    image = 'core/static/core/img/logo_mexa.jpg'
+    ceo_sig = 'core/static/core/img/firma.jpg'
+    rh_sig = 'core/static/core/img/firma.jpg'
+
+    # Step 0: create the pdf file
+    pdf = canvas.Canvas('media/'+filename)
+    pdf.setTitle(documenttitle)
+
+    # Step 1: Image logo
+    pdf.drawInlineImage(image, 45, 600)
+
+    # Step 2: Title
+    # Register a new font
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.pdfbase import pdfmetrics
+    pdfmetrics.registerFont(
+        TTFont('berkshire', 'core/static/core/fonts/berkshire/Berkshire.ttf')
+    )
+    # Set the principal font
+    pdf.setFont('berkshire', 18)
+    # Print the title
+    pdf.drawCentredString(300, 550, title)
+
+    # Step 3: Username
+    # Set the principal font
+    pdf.setFont('berkshire', 25)
+    pdf.drawCentredString(300, 500, user)
+
+    # Step 4: Label course
+    # Set the principal font
+    pdf.setFont('berkshire', 18)
+    pdf.drawCentredString(300, 450, label_course)
+
+    # Step 5: Course name
+    # Set the principal font
+    pdf.setFont('berkshire', 25)
+    pdf.drawCentredString(300, 400, course_name)
+
+    # Step 6: created date
+    # Set the principal font
+    pdf.setFont('berkshire', 14)
+    pdf.drawCentredString(300, 360, create_date)
+
+    # Step 7: Congratulations text
+    # Set the principal font
+    pdf.setFont('berkshire', 12)
+    pdf.drawCentredString(300, 300, congra_text)
+
+    # Step 8: CEO's name
+    # Set the principal font
+    pdf.setFont('berkshire', 10)
+    pdf.drawInlineImage(ceo_sig, 100, 120, width=100, height=60)
+    pdf.drawInlineImage(rh_sig, 420, 120, width=100, height=60)
+    pdf.drawString(100, 100, ceo_name)
+    pdf.drawString(450, 100, rh_manager)
+
+    # Save the document
+    pdf.save()
 
 # Results view
 def user_results(request, pk):
@@ -169,15 +273,15 @@ def user_results(request, pk):
     c_ans = 0
     status = 1
     for ans_data in user_ans:
-        import pdb
         # Validamos que la respuesta sea correcta
         if ans_data.answer.is_correct == True:
             c_ans += 1
     calf_final = (c_ans * 10)/len(user_ans)
+    # Si la calificacion es menor o igual a 6, se coloca 5
     if calf_final <= 6:
         calf_final = 5
         status = 2
-    # Obtenemos los datos del usuario
+    # Obtenemos la instancia de los datos para hacer el registro
     content_instance = ContentHeader.objects.get(id=pk)
     status_instance = UserGradeStatus.objects.get(id=status)
     # Validamos que no exista el registro
@@ -204,17 +308,47 @@ def user_results(request, pk):
             status=status_instance,
             user=request.user
         )
-    # Cambiamos de status el curso del usuario
-    new_status_instance = StatusUserCourse.objects.get(id=4)
-    user_course_id = UserCourse.objects.filter(
-        Q(course=pk),
-        Q(user=request.user)
-    ).update(
-        status=new_status_instance
-    )
     # Obtenemos calificacion del usuario
     user_grade_info = UserCourseGrade.objects.filter(
         Q(content=pk),
         Q(user=request.user)
     )
-    return render(request, "dashboard/results.html", {'user_ans': user_ans, 'user_grade': user_grade_info})
+    # Iteramos en la informacion del usuario
+    for data_calf in user_grade_info:
+        validate_calf = data_calf.calf
+        # Si el usaurio aprobó el curso
+        if validate_calf != '5':
+            # Generamos el certificado del usuario
+            create_certificate(request.user, pk)
+            # Cambiamos de status el curso del usuario
+            new_status_instance = StatusUserCourse.objects.get(id=4)
+            user_course_id = UserCourse.objects.filter(
+                Q(course=pk),
+                Q(user=request.user)
+            ).update(
+                status=new_status_instance
+            )
+            # Insertamos el documento en la tabla
+            # Validamos que el registro no exista
+            validate_data = UserCertificates.objects.values().filter(
+                Q(user=request.user),
+                Q(content=pk)
+            )
+            # Si no existe, lo insertamos
+            if len(validate_data) == 0:
+                # Creamos el mismo nombre del documento
+                # Creamos un identificador para el nombre del certificado
+                cert_id = '%s_%s' % (request.user.id, pk)
+                filename = 'certificate_%s.pdf' % (cert_id)
+                user_cert_id = UserCertificates.objects.create(
+                    cert_file=filename,
+                    content=content_instance,
+                    user=request.user
+                )
+    # Obtenemos el certificado del usuario
+    user_cert_pdf = UserCertificates.objects.filter(
+        Q(content=pk),
+        Q(user=request.user)
+    )
+
+    return render(request, "dashboard/results.html", {'user_ans': user_ans, 'user_grade': user_grade_info, 'cert': user_cert_pdf})

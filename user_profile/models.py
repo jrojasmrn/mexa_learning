@@ -93,3 +93,19 @@ class UserCourseGrade(models.Model):
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return 'Calificacion de %s - %s' % (self.user, self.content)
+
+# User course certificate
+class UserCertificates(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    content = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Contenido')
+    cert_file = models.CharField(max_length=254, verbose_name='Certificado')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Certificado"
+        verbose_name_plural = "Certificados"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return 'Certificado de %s ' % (self.user)

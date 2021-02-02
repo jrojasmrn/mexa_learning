@@ -27,7 +27,24 @@ def user_profile(request):
     calfs = ActivityGrades.objects.filter(
         Q(user=request.user)
     )
-    return render(request, "user_profile/profile.html", {'profile': profile, 'content': content, 'usersubs': usersubs, 'act': act, 'calfs': calfs})
+    # Obtenemos la calificacion del curso final
+    course_calf = UserCourseGrade.objects.filter(
+        Q(user=request.user)
+    )
+    # Obtenemos los certificados del usuario
+    user_certs = UserCertificates.objects.filter(
+        Q(user=request.user)
+    )
+    return render(request, "user_profile/profile.html",
+                  {
+                      'profile': profile,
+                      'content': content,
+                      'usersubs': usersubs,
+                      'act': act,
+                      'calfs': calfs,
+                      'content_calf': course_calf,
+                      'user_certs': user_certs
+                  })
 
 # Update user profile view
 def update_user_profile(request, pk):

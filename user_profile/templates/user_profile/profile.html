@@ -63,10 +63,12 @@
                         <div class="card border-danger mb-3">
                             <div class="card-header">Mis certificados</div>
                             <div class="card-body text">
-                            <h5 class="card-title">¡No tienes certificados!</h5>
-                            {% if profile.certificates %}
-                                <p class="card-text">{{profile.certificates_course}}</p>
+                            {% if user_certs %}
+                                {% for user_certs in user_certs %}
+                                    <a href="/media/{{user_certs.cert_file}}" target="_blank">{{user_certs.content.title}}</a>
+                                {% endfor %}
                             {% else %}
+                                <h5 class="card-title">¡No tienes certificados!</h5>
                                 <p class="card-text">Tranquilo, finaliza uno de los cursos que tengas asignados y aquí aparecerá tu certificado para validar que hayas finalizado con éxito tu curso.</p>
                             {% endif %}
                             </div>
@@ -132,7 +134,11 @@
                                                     <th scope="row">{{content.id}}</th>
                                                     <td>{{content.course}}</td>
                                                     <td>{{content.status}}</td>
-                                                    <td>NA</td>
+                                                    {% for content_calf in content_calf %}
+                                                        {% if content.course.id == content_calf.content.id %}
+                                                            <td class="table-{% if content_calf.calf == '5' %}danger{% endif %}">{{content_calf.calf}}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

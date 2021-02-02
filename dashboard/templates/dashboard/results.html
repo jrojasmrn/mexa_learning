@@ -43,6 +43,16 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6 col">
+                <!--Mostramos el certificado del usuario-->
+                {% if cert %}
+                    {% for cert in cert %}
+                        <embed src="/media/{{cert.cert_file}}" type="application/pdf" width="100%" height="600px">
+                    {% endfor %}
+                {% else %}
+                    <h2>No lograste obtener el certificado.</h2>
+                {% endif %}
+            </div>
         </div>
     </div>
 </section>
