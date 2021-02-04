@@ -10,18 +10,30 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Inserta el titulo del anuncio</label>
-                            {{form.title}}
+                            <input required type="text" class="form-control" name="title">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Inserta el mensaje del anuncio</label>
-                            {{form.content}}
+                            <textarea required class="form-control" rows="3" name="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta una imágen para el anuncio(Opcional)</label>
+                            {{form.image_adver}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta un link para el anuncio(Opcional)</label>
+                            <input type="url" class="form-control" name="link_adver">
                         </div>
                     </div>
                     <div class="form-row">

@@ -60,6 +60,15 @@
                                 <blockquote class="blockquote mb-0">
                                     <p>{{adver.title}}</p>
                                     <small>{{adver.content}}</small>
+                                    <br>
+                                    {% if adver.image_adver %}
+                                        <img src="{{adver.image_adver.url}}" class="img-fluid" alt="">
+                                    {% endif %}
+                                    <br>
+                                    {% if adver.link_adver %}
+                                        <a href="{{adver.link_adver}}" target="_blank">Ver enlace</a>
+                                    {% endif %}
+                                    <br>
                                     <footer class="blockquote-footer"><cite title="Source Title">{{adver.updated}}</cite></footer>
                                 </blockquote>
                                 <hr>

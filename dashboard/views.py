@@ -6,6 +6,10 @@ from django.contrib.auth.models import User
 # Import . models
 from .models import CheckMediaUser
 from django.db.models import Q
+# Libs to Datetime
+from pytz import timezone
+import pytz
+import datetime
 #import forms
 from .forms import UploadFile
 
@@ -178,6 +182,15 @@ def tests(request, pk):
         return redirect('user_results', pk)
     return render(request, "dashboard/exams.html", {'test': list_preguntas})
 
+# Convertir fechas UTC a Local
+def f_datetime_utc_to_local(date_time):
+    local_timezone = 'America/Mexico_City'
+    utc = timezone('UTC')
+    date_time = date_time.replace(tzinfo=None)
+    date_time = utc.localize(date_time)
+    date_time = date_time.astimezone(pytz.timezone(local_timezone))
+    return date_time
+
 # Create certificate function
 def create_certificate(user, content):
     # Reprot Lab library
@@ -191,7 +204,7 @@ def create_certificate(user, content):
     for data in user_calf:
         cert_user = data.user.get_full_name()
         cert_course = data.content.title
-        cert_date = data.created
+        cert_date = f_datetime_utc_to_local(data.created)
         # Creamos un identificador para el nombre del certificado
         cert_id = '%s_%s' % (data.user.id, data.content.id)
     # PDF Content:
@@ -280,7 +293,7 @@ def user_results(request, pk):
             c_ans += 1
     calf_final = (c_ans * 10)/len(user_ans)
     # Si la calificacion es menor o igual a 6, se coloca 5
-    if calf_final <= 6:
+    if calf_final < 7:
         calf_final = 5
         status = 2
     # Obtenemos la instancia de los datos para hacer el registro
@@ -318,7 +331,7 @@ def user_results(request, pk):
     # Iteramos en la informacion del usuario
     for data_calf in user_grade_info:
         validate_calf = data_calf.calf
-        # Si el usaurio aprobó el curso
+        # Si el usuario aprobó el curso
         if validate_calf != '5':
             # Generamos el certificado del usuario
             create_certificate(request.user, pk)

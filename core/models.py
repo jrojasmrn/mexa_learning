@@ -9,7 +9,9 @@ from status.models import Status
 # Advertisements model
 class Advertisements(models.Model):
     title = models.CharField(max_length=254, verbose_name='Titulo')
-    content = models.CharField(max_length=254, verbose_name='Aunicio')
+    content = models.TextField(verbose_name='Anuncio')
+    image_adver = models.ImageField(verbose_name='Imagen de anuncio', null=True, blank=True)
+    link_adver = models.URLField(verbose_name='Links', null=True, blank=True)
     user = models.ManyToManyField(User, verbose_name='Usuarios', null=True, blank=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE, verbose_name='Status', default=1)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')

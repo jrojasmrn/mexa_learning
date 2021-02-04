@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -22,6 +22,18 @@
                         <div class="form-group col-md-6">
                             <label>Inserta el mensaje del anuncio</label>
                             {{form.content}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta una imágen para el anuncio(Opcional)</label>
+                            {{form.image_adver}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Inserta un link para el anuncio</label>
+                            {{form.link_adver}}
                         </div>
                     </div>
                     <div class="form-row">

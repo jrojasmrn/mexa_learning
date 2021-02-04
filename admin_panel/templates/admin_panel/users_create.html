@@ -25,17 +25,17 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                           <label>Nombre(s)</label>
-                          <input type="text" class="form-control" name="first_name">
+                          <input required type="text" class="form-control" name="first_name">
                         </div>
                         <div class="form-group col-md-6">
                           <label>Apellidos</label>
-                          <input type="text" class="form-control" name="last_name">
+                          <input required type="text" class="form-control" name="last_name">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                           <label>Nombre de usuario</label>
-                          <input type="text" class="form-control" name="username">
+                          <input required type="text" class="form-control" name="username">
                           {% if form.username.errors %}
                             {{form.username.errors}}
                           {% endif %}
@@ -45,18 +45,18 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                           <label>Correo electrónico</label>
-                          <input type="email" class="form-control" name="email">
+                          <input required type="email" class="form-control" name="email">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                           <label>Contraseña</label>
-                          <input type="password" class="form-control" name="password1">
+                          <input required type="password" class="form-control" name="password1">
                           {{form.password1.help_text}}
                         </div>
                         <div class="form-group col-md-6">
                           <label>Confirmar contraseña</label>
-                          <input type="password" class="form-control" name="password2">
+                          <input required type="password" class="form-control" name="password2">
                           {{form.password2.help_text}}
                         </div>
                         {% if form.password2.errors %}

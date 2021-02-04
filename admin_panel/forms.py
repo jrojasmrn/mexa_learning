@@ -173,23 +173,7 @@ class UpdateAssignCourseForm(forms.ModelForm):
 
 # Create advertisements form
 class CreateAdvertisementForm(forms.ModelForm):
-    class Meta:
-        # Model name
-        model = Advertisements
-        # Model fields
-        fields = [
-            'title',
-            'content',
-            'user'
-        ]
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.TextInput(attrs={'class': 'form-control'}),
-            'user': forms.SelectMultiple(attrs={'class': 'form-control'})
-        }
-
-# Update advertisements form
-class UpdateAdvertisementsForm(forms.ModelForm):
+    image_adver = forms.ImageField()
     class Meta:
         # Model name
         model = Advertisements
@@ -198,12 +182,36 @@ class UpdateAdvertisementsForm(forms.ModelForm):
             'title',
             'content',
             'user',
+            'image_adver',
+            'link_adver'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+            'user': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'link_adver': forms.TextInput(attrs={'class': 'form-control'})
+        }
+
+# Update advertisements form
+class UpdateAdvertisementsForm(forms.ModelForm):
+    image_adver = forms.ImageField()
+    class Meta:
+        # Model name
+        model = Advertisements
+        # Model fields
+        fields = [
+            'title',
+            'content',
+            'user',
+            'image_adver',
+            'link_adver',
             'status'
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'content': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
             'user': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'link_adver': forms.TextInput(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'})
         }
 

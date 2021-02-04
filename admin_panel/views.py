@@ -87,7 +87,7 @@ def create_content(request):
         if form.is_valid():
             form.save()
             return redirect('admin-courses')
-    return render(request, "admin_panel/courses_create.html", {'form':form})
+    return render(request, "admin_panel/courses_create.html", {'form': form})
 
 # Update content view
 @staff_member_required
@@ -257,7 +257,8 @@ def create_notice(request):
     form = CreateAdvertisementForm()
     # Validamos que formulario sea POST
     if request.method == 'POST':
-        form = CreateAdvertisementForm(request.POST)
+        form = CreateAdvertisementForm(request.POST, request.FILES)
+        # Valido si mi formulario es valido
         if form.is_valid():
             form.save()
             return redirect('admin-panel')
@@ -269,7 +270,7 @@ def update_notice(request, id_notice):
     instancia = Advertisements.objects.get(id=id_notice)
     form = UpdateAdvertisementsForm(instance=instancia)
     if request.method == 'POST':
-        form = UpdateAdvertisementsForm(request.POST, instance=instancia)
+        form = UpdateAdvertisementsForm(request.POST, request.FILES, instance=instancia)
         if form.is_valid():
             form.save()
             return redirect('admin-panel')
