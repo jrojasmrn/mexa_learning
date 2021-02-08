@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from user_profile.models import UserCourse, UserCourseGrade, UserCertificates
+from user_profile.models import UserCourse, UserCourseGrade, UserCertificates, ActivityUsers, ActivityGrades
 from courses.models import ContentHeader, ContentMedia, QuestionsTest, AnswersTest, AnsUserTest
 from status.models import Status, StatusUserCourse, UserGradeStatus
 from django.contrib.auth.models import User
@@ -83,7 +83,31 @@ def dashboard(request, pk, course_name, pk_media):
         Q(course=course_id),
         Q(user=request.user)
     )
-    #Validamos que existe examen para el curso
+    # Validamos cuantas actividades tiene el curso y el usuario
+    act_cont = 0
+    test_flag = 0
+    act_media = ContentMedia.objects.filter(
+        Q(content=course_id)
+    )
+    act_user = ActivityGrades.objects.filter(
+        Q(user=request.user),
+        Q(course=course_id)
+    )
+    # Iteramos en el queryset
+    for val_act in act_media:
+        # Validamos que el media tenga act
+        if val_act.activity_name:
+            # Obtenemos la cantidad de acts del curso
+            act_cont +=1
+    if len(act_user) == act_cont:
+        test_flag = 1
+    # Validamos si ya mandó la activdad del modulo
+    activity_sended = ActivityUsers.objects.filter(
+        Q(user=request.user),
+        Q(content=course_id),
+        Q(content_media=pk_media)
+    )
+    # Validación examen
     val_exa = QuestionsTest.objects.filter(
         Q(content=course_id)
     )
@@ -99,13 +123,15 @@ def dashboard(request, pk, course_name, pk_media):
             form.save()
             return redirect('control-pane')
     return render(request, "dashboard/dashboard.html",
-                {
-                    'form': form,
-                    'usercourse': instancia,
-                    'content_course': content_course,
-                    'content_course_data': content_course_data,
-                    'val_exa': val_exa,
-                })
+                    {
+                        'form': form,
+                        'usercourse': instancia,
+                        'content_course': content_course,
+                        'content_course_data': content_course_data,
+                        'val_exa': val_exa,
+                        'activity_sended': activity_sended,
+                        'test_flag': test_flag
+                    })
 
 # Test view
 def tests(request, pk):
@@ -365,5 +391,4 @@ def user_results(request, pk):
         Q(content=pk),
         Q(user=request.user)
     )
-
     return render(request, "dashboard/results.html", {'user_ans': user_ans, 'user_grade': user_grade_info, 'cert': user_cert_pdf})

@@ -109,3 +109,19 @@ class UserCertificates(models.Model):
     # Cambio de nombre de proyectos para mostrar
     def __str__(self):
         return 'Certificado de %s ' % (self.user)
+
+# User general calf model
+class UserGeneralGrades(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
+    calf = models.FloatField(verbose_name='Calificacion')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Modificado')
+
+    # Cambiar nombre para mostrar
+    class Meta:
+        verbose_name = "Promedio general"
+        verbose_name_plural = "Promedios generales"
+
+    # Cambio de nombre de proyectos para mostrar
+    def __str__(self):
+        return 'Promedio de %s ' % (self.user)

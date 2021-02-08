@@ -30,12 +30,18 @@
                         {% endfor %}
                     {% endfor %}
                     <!--Validación de examen-->
-                    {% if val_exa %}
-                        {% for usercourse_va in usercourse %}
-                            <div class="alert alert-danger mb-1" role="alert">
-                                <a href="{% url 'test_course' usercourse_va.course.id %}">Haz el Examen</a>
-                            </div>
-                        {% endfor %}
+                    {% if test_flag == 1 %}
+                        {% if val_exa %}
+                            {% for usercourse_va in usercourse %}
+                                <div class="alert alert-danger mb-1" role="alert">
+                                    <a href="{% url 'test_course' usercourse_va.course.id %}">Haz el Examen</a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-warning mb-1" role="alert">
+                            Tienes actividades pendientes
+                        </div>
                     {% endif %}
                     <!--Validación de examen-->
                 </div>
@@ -79,7 +85,7 @@
                             <!--Notes-->
                             <a class="nav-item nav-link" id="nav-notes-tab" data-toggle="tab" href="#nav-{{content_course_data.id}}-2" role="tab" aria-controls="nav-notes" aria-selected="false">Notas</a>
                             <!--Activity-->
-                            <a class="nav-item nav-link" id="nav-advertisements-tab" data-toggle="tab" href="#nav-{{content_course_data.id}}-3" role="tab" aria-controls="nav-advertisements" aria-selected="false">Actividades {% if content_course_data.activity_name %}<span class="badge badge-warning">1</span>{% endif %}</a>
+                            <a class="nav-item nav-link" id="nav-advertisements-tab" data-toggle="tab" href="#nav-{{content_course_data.id}}-3" role="tab" aria-controls="nav-advertisements" aria-selected="false">Actividades {% if content_course_data.activity_name %}{% if activity_sended %}{%else%}<span class="badge badge-warning">1</span>{%endif%}{% endif %}</a>
                             </div>
                         </nav>
                         <div class="tab-content mb-5" id="nav-tabContent">
@@ -102,31 +108,35 @@
                             <!--Activity-->
                             <div class="tab-pane fade" id="nav-{{content_course_data.id}}-3" role="tabpanel" aria-labelledby="nav-contact-tab">
                                 {% if content_course_data.activity_name %}
-                                    <b><h4>{{content_course_data.activity_name}}</h4></b>
-                                    <br>
-                                    <p>{{content_course_data.activity_description}}</p>
-                                    <!--Form para cargar archivo-->
-                                    <form method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="form-group">
-                                            <div class="alert alert-danger" role="alert">
-                                                Para mandar tu archivo correctamente, éste deberá ser un documento PDF para poder cargarlo.
+                                    {% if activity_sended %}
+                                        Ya haz mandado tu actividad
+                                    {% else %}
+                                        <b><h4>{{content_course_data.activity_name}}</h4></b>
+                                        <br>
+                                        <p>{{content_course_data.activity_description}}</p>
+                                        <!--Form para cargar archivo-->
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <div class="alert alert-danger" role="alert">
+                                                    Para mandar tu archivo correctamente, éste deberá ser un documento PDF para poder cargarlo.
+                                                </div>
+                                                <hr>
+                                                <label for="exampleFormControlFile1">Adjunta tu tarea aquí</label>
+                                                <br>
+                                                {{form.act_file}}
+                                                <br>
+                                                <label for="">Adjunta un comentario para mandar tu tarea.</label>
+                                                <br>
+                                                {{form.comment}}
+                                                <br>
+                                                <input hidden type="text" value="{{content_course_data.content.id}}" name="content">
+                                                <input hidden type="text" value="{{content_course_data.id}}" name="content_media">
+                                                <input hidden type="text" value="{{request.user.id}}" name="user">
+                                                <button type="submit" class="btn btn-success">Enviar tarea</button>
                                             </div>
-                                            <hr>
-                                            <label for="exampleFormControlFile1">Adjunta tu tarea aquí</label>
-                                            <br>
-                                            {{form.act_file}}
-                                            <br>
-                                            <label for="">Adjunta un comentario para mandar tu tarea.</label>
-                                            <br>
-                                            {{form.comment}}
-                                            <br>
-                                            <input hidden type="text" value="{{content_course_data.content.id}}" name="content">
-                                            <input hidden type="text" value="{{content_course_data.id}}" name="content_media">
-                                            <input hidden type="text" value="{{request.user.id}}" name="user">
-                                            <button type="submit" class="btn btn-success">Enviar tarea</button>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    {% endif %}
                                 {% else %}
                                     No hay actividad para este módulo
                                 {% endif %}

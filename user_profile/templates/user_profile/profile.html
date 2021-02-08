@@ -22,6 +22,11 @@
                                 <div class="card-body">
                                 <h5 class="card-title">{{user.get_full_name}}</h5>
                                 <ul class="list-group list-group-flush">
+                                    {% if user_prom_final %}
+                                        {% for user_prom_final in user_prom_final %}
+                                            <li class="list-group-item">Promedio general:<br><span class="badge badge-{%if user_prom_final.calf == 5%}danger{%endif%}success">{{user_prom_final.calf}}</span></li>
+                                        {% endfor %}
+                                    {% endif %}
                                     <li class="list-group-item">Nombre de usuario:<br>{{user.username}}</li>
                                     {% if profile.location %}
                                         <li class="list-group-item">Ubicación:<br>{{profile.location}}</li>
@@ -60,60 +65,6 @@
                         </div>
                         <br>
                         <hr>
-                        <div class="card border-danger mb-3">
-                            <div class="card-header">Mis certificados</div>
-                            <div class="card-body text">
-                            {% if user_certs %}
-                                {% for user_certs in user_certs %}
-                                    <a href="/media/{{user_certs.cert_file}}" target="_blank">{{user_certs.content.title}}</a>
-                                    <br>
-                                {% endfor %}
-                            {% else %}
-                                <h5 class="card-title">¡No tienes certificados!</h5>
-                                <p class="card-text">Tranquilo, finaliza uno de los cursos que tengas asignados y aquí aparecerá tu certificado para validar que hayas finalizado con éxito tu curso.</p>
-                            {% endif %}
-                            </div>
-                        </div>
-                        <br>
-                        <hr>
-                        <div class="card border-success mb-3">
-                            <div class="card-header">Mis actividades</div>
-                            <div class="card-body text">
-                                <h5 class="card-title">Actividades enviadas</h5>
-                                {% if act %}
-                                    <table class="table">
-                                        <thead class="thead-dark">
-                                        <tr>
-                                            <th scope="col">Curso</th>
-                                            <th scope="col">Fecha</th>
-                                            <th scope="col">Actividad</th>
-                                            <th scope="col">Calificación</th>
-                                            <th scope="col">Comentario</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for act in act %}
-                                                <tr>
-                                                    <th scope="row">{{act.content}}</th>
-                                                    <td>{{act.created}}</td>
-                                                    <td><a href="{{act.act_file.url}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
-                                                    {% for calfs in calfs %}
-                                                        {% if act.id == calfs.activity.id %}
-                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.grade}}</td>
-                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.comment}}</td>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                {% else %}
-                                    <p>No hay actividades</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <br>
-                        <hr>
                         <div class="card border-info mb-3">
                             <div class="card-header">Mis cursos</div>
                             <div class="card-body">
@@ -126,6 +77,7 @@
                                             <th scope="col">Id curso</th>
                                             <th scope="col">Nombre de curso</th>
                                             <th scope="col">Estatus</th>
+                                            <th scope="col">Certificado</th>
                                             <th scope="col">Calificación</th>
                                         </tr>
                                         </thead>
@@ -135,6 +87,11 @@
                                                     <th scope="row">{{content.id}}</th>
                                                     <td>{{content.course}}</td>
                                                     <td>{{content.status}}</td>
+                                                    {% for user_certs in user_certs %}
+                                                        {% if content.course.id == user_certs.content.id %}
+                                                            <td><a href="/media/{{user_certs.cert_file}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
+                                                        {% endif %}
+                                                    {% endfor %}
                                                     {% for content_calf in content_calf %}
                                                         {% if content.course.id == content_calf.content.id %}
                                                             <td class="table-{% if content_calf.calf == '5' %}danger{% endif %}">{{content_calf.calf}}</td>
@@ -177,6 +134,44 @@
                                     </div>
                                 {% endif %}
                                 <!--Fin de tabla para cursos-->
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <div class="card border-success mb-3">
+                            <div class="card-header">Mis actividades</div>
+                            <div class="card-body text">
+                                <h5 class="card-title">Actividades enviadas</h5>
+                                {% if act %}
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Curso</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Actividad</th>
+                                            <th scope="col">Calificación</th>
+                                            <th scope="col">Comentario</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for act in act %}
+                                                <tr>
+                                                    <th scope="row">{{act.content}}</th>
+                                                    <td>{{act.created}}</td>
+                                                    <td><a href="{{act.act_file.url}}" target="_blank" class="btn btn-outline-primary">Ver</a></td>
+                                                    {% for calfs in calfs %}
+                                                        {% if act.id == calfs.activity.id %}
+                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.grade}}</td>
+                                                            <td class="table-{% if calfs.grade.grade == '5' %}danger{% endif %}">{{calfs.comment}}</td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No hay actividades</p>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

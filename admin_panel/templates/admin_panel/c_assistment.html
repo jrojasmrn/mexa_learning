@@ -33,6 +33,11 @@
                                 <div class="card-body">
                                 <h5 class="card-title">{{profile.user.get_full_name}}</h5>
                                 <ul class="list-group list-group-flush">
+                                    {% if user_prom_final %}
+                                        {% for user_prom_final in user_prom_final %}
+                                            <li class="list-group-item">Promedio general:<br><span class="badge badge-{%if user_prom_final.calf == 5%}danger{%endif%}success">{{user_prom_final.calf}}</span></li>
+                                        {% endfor %}
+                                    {% endif %}
                                     <li class="list-group-item">Nombre de usuario:<br>{{profile.user.username}}</li>
                                     {% if profile.location %}
                                         <li class="list-group-item">Ubicación:<br>{{profile.location}}</li>

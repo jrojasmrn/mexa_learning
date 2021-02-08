@@ -3,7 +3,7 @@ from django.db.models import Q
 # import decorations libs
 from django.contrib.admin.views.decorators import staff_member_required
 # Import User profile models
-from user_profile.models import UserProfile, UserCourse, ActivityUsers, ActivityGrades
+from user_profile.models import UserProfile, UserCourse, ActivityUsers, ActivityGrades,UserGeneralGrades
 # Import Content models
 from courses.models import ContentHeader, ContentMedia, SubscribeCourse, QuestionsTest, AnswersTest
 # Import Status model
@@ -291,13 +291,18 @@ def assistment_user(request, id_user):
     calf_act = ActivityGrades.objects.filter(
         Q(user=id_user)
     )
+    # Obtenemos el promedio general del usuario
+    user_prom_final = UserGeneralGrades.objects.filter(
+        Q(user=id_user)
+    )
     return render(request, "admin_panel/c_assistment.html",
                   {
                       'assist': assist,
                       'profile': info,
                       'course': user_course,
                       'act': act_user,
-                      'calf_act': calf_act
+                      'calf_act': calf_act,
+                      'user_prom_final': user_prom_final
                   })
 
 # Activity's grade view
