@@ -96,6 +96,7 @@ WSGI_APPLICATION = 'mexaeducation.wsgi.application'
 # }
 # SQL Server DB Connection
 DATABASES = {
+    # Local
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'Mexa_Learning',
@@ -107,6 +108,17 @@ DATABASES = {
             'driver': 'ODBC Driver 13 for SQL Server',
         }
     }
+    # Srv
+    # 'default': {
+    #     'ENGINE': 'sql_server.pyodbc',
+    #     'NAME': 'mexa_learning',
+    #     'USER': 'jrojas',
+    #     'PASSWORD': 'Edo tensei*2012',
+    #     'HOST': '192.168.1.162',
+    #     'PORT': '',
+    #     'OPTIONS': {
+    #         'driver': driver_connection_sql_server,
+    #     }
 }
 
 
