@@ -111,7 +111,7 @@ DATABASES = {
     # Srv
     'default': {
         'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'Intranet',
+        'NAME': 'mexa_learning',
         'USER': 'jrojas',
         'PASSWORD': 'Edo tensei*2012',
         'HOST': '192.168.1.162',
