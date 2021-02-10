@@ -97,28 +97,29 @@ WSGI_APPLICATION = 'mexaeducation.wsgi.application'
 # SQL Server DB Connection
 DATABASES = {
     # Local
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'Mexa_Learning',
-        'USER': 'sa',
-        'PASSWORD': 'jrojas123',
-        'HOST': 'localhost',
-        'PORT': '',
-        'OPTIONS': {
-            'driver': 'ODBC Driver 13 for SQL Server',
-        }
-    }
-    # Srv
     # 'default': {
     #     'ENGINE': 'sql_server.pyodbc',
-    #     'NAME': 'mexa_learning',
-    #     'USER': 'jrojas',
-    #     'PASSWORD': 'Edo tensei*2012',
-    #     'HOST': '192.168.1.162',
+    #     'NAME': 'Mexa_Learning',
+    #     'USER': 'sa',
+    #     'PASSWORD': 'jrojas123',
+    #     'HOST': 'localhost',
     #     'PORT': '',
     #     'OPTIONS': {
-    #         'driver': driver_connection_sql_server,
+    #         'driver': 'ODBC Driver 13 for SQL Server',
     #     }
+    # }
+    # Srv
+    'default': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'Intranet',
+        'USER': 'jrojas',
+        'PASSWORD': 'Edo tensei*2012',
+        'HOST': '192.168.1.162',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        }
+    },
 }
 
 
@@ -144,9 +145,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
