@@ -64,7 +64,7 @@ class ActivityGrades(models.Model):
     activity = models.ForeignKey(ActivityUsers, on_delete=models.CASCADE, verbose_name='Actividad')
     course = models.ForeignKey(ContentHeader, on_delete=models.CASCADE, verbose_name='Curso')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
-    grade = models.ForeignKey(UserGrades, on_delete=models.CASCADE, verbose_name='Calificacion', default='NA')
+    grade = models.ForeignKey(UserGrades, on_delete=models.CASCADE, verbose_name='Calificacion')
     comment = models.TextField(verbose_name='Comentario')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
 
