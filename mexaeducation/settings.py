@@ -97,29 +97,29 @@ WSGI_APPLICATION = 'mexaeducation.wsgi.application'
 # SQL Server DB Connection
 DATABASES = {
     # Local
-    # 'default': {
-    #     'ENGINE': 'sql_server.pyodbc',
-    #     'NAME': 'Mexa_Learning',
-    #     'USER': 'sa',
-    #     'PASSWORD': 'jrojas123',
-    #     'HOST': 'localhost',
-    #     'PORT': '',
-    #     'OPTIONS': {
-    #         'driver': 'ODBC Driver 13 for SQL Server',
-    #     }
-    # }
-    # Srv
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'mexa_learning',
-        'USER': 'jrojas',
-        'PASSWORD': 'Edo tensei*2012',
-        'HOST': '192.168.1.162',
+        'USER': 'sa',
+        'PASSWORD': 'jrojas123',
+        'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {
-            'driver': 'ODBC Driver 17 for SQL Server',
+            'driver': 'ODBC Driver 13 for SQL Server',
         }
-    },
+    }
+    # Srv
+    # 'default': {
+    #     'ENGINE': 'sql_server.pyodbc',
+    #     'NAME': 'mexa_learning',
+    #     'USER': 'jrojas',
+    #     'PASSWORD': 'Edo tensei*2012',
+    #     'HOST': '192.168.1.162',
+    #     'PORT': '',
+    #     'OPTIONS': {
+    #         'driver': 'ODBC Driver 17 for SQL Server',
+    #     }
+    # },
 }
 
 
@@ -160,6 +160,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Configuración de archivos media solamente para prueba, necesito el Degub = True
 #Media config
