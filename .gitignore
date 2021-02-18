@@ -1,0 +1,20 @@
+.idea
+# Base de datos de prueba
+db.sqlite3
+# Migraciones de Django
+admin_panel/migrations
+catalogues/migrations
+core/migrations
+courses/migrations
+dashboard/migrations
+mexaeducation/migrations
+registration/migrations
+social/migrations
+status/migrations
+user_profile/migrations
+
+# Archivos terminación pyc(caché)
+*.pyc
+# Archivos terminación log(logs)
+*.log
+
