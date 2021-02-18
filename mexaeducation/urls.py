@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 #Import settings for the media file only if debug = True
 from django.conf import settings
-
+from django.conf.urls.static import static
 urlpatterns = [
     # URLs from App Registration
     path('', include('django.contrib.auth.urls')),
@@ -35,9 +35,8 @@ urlpatterns = [
     path('social/', include('social.urls')),
     # URLs from App Dashboard
     path('dashboard/', include('dashboard.urls')),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 #Comprobar si el Debug está en marcha o desactivado
-if settings.DEBUG:
-    from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     from django.conf.urls.static import static
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
